@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "952772230874",
+    "project_id": "educational-app-lmgxdj",
+    "storage_bucket": "educational-app-lmgxdj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952772230874:android:03a3eecb7c527441caefe3",
+        "android_client_info": {
+          "package_name": "com.mycompany.medrasti"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952772230874-mma6nspaekgtbjvabndjef93707glevi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.medrasti",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "952772230874-mbm44usic12dn68ev6of6a0raa3achvu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqL4OvJgNA7aqZcMZK7kkpSh8T4S37OVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "952772230874-mbm44usic12dn68ev6of6a0raa3achvu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "952772230874-jfsifo732avluv13qcbor7fvtq1672bf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.medrasti"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
