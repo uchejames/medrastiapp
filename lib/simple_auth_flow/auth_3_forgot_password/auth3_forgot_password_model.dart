@@ -7,7 +7,6 @@ class Auth3ForgotPasswordModel
     extends FlutterFlowModel<Auth3ForgotPasswordWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for email widget.
   FocusNode? emailFocusNode;
   TextEditingController? emailTextController;
@@ -19,7 +18,6 @@ class Auth3ForgotPasswordModel
 
   @override
   void dispose() {
-    unfocusNode.dispose();
     emailFocusNode?.dispose();
     emailTextController?.dispose();
   }

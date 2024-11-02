@@ -103,21 +103,21 @@ class LightModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF0058D8);
+  late Color primary = const Color(0xFF0D2136);
   late Color secondary = const Color(0xFFF8C14A);
-  late Color tertiary = const Color(0xFF015BD9);
-  late Color alternate = const Color(0xFFE0E3E7);
-  late Color primaryText = const Color(0xFF14181B);
-  late Color secondaryText = const Color(0xFF0058D8);
-  late Color primaryBackground = const Color(0xFFF1F4F8);
+  late Color tertiary = const Color(0xFF000000);
+  late Color alternate = const Color(0xFFFFFFFF);
+  late Color primaryText = const Color(0xFF000000);
+  late Color secondaryText = const Color(0xFF000000);
+  late Color primaryBackground = const Color(0xFFFFFFFF);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
-  late Color accent1 = const Color(0xFF0058D8);
-  late Color accent2 = const Color(0xFF0058D8);
+  late Color accent1 = const Color(0xFF000000);
+  late Color accent2 = const Color(0xFF0D2136);
   late Color accent3 = const Color(0xFFF8C14A);
-  late Color accent4 = const Color(0xCCFFFFFF);
+  late Color accent4 = const Color(0xFFFFFFFF);
   late Color success = const Color(0xFF249689);
   late Color warning = const Color(0xFFF9CF58);
-  late Color error = const Color(0xFFFF5963);
+  late Color error = const Color(0xFF0D2136);
   late Color info = const Color(0xFFFFFFFF);
 }
 
@@ -163,14 +163,14 @@ class ThemeTypography extends Typography {
   TextStyle get displayLarge => GoogleFonts.getFont(
         'Outfit',
         color: theme.primaryText,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w600,
         fontSize: 64.0,
       );
   String get displayMediumFamily => 'Outfit';
   TextStyle get displayMedium => GoogleFonts.getFont(
         'Outfit',
         color: theme.primaryText,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w600,
         fontSize: 44.0,
       );
   String get displaySmallFamily => 'Outfit';
@@ -191,77 +191,77 @@ class ThemeTypography extends Typography {
   TextStyle get headlineMedium => GoogleFonts.getFont(
         'Outfit',
         color: theme.primaryText,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w600,
         fontSize: 24.0,
       );
   String get headlineSmallFamily => 'Outfit';
   TextStyle get headlineSmall => GoogleFonts.getFont(
         'Outfit',
         color: theme.primaryText,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         fontSize: 24.0,
       );
   String get titleLargeFamily => 'Outfit';
   TextStyle get titleLarge => GoogleFonts.getFont(
         'Outfit',
         color: theme.primaryText,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         fontSize: 22.0,
       );
   String get titleMediumFamily => 'Readex Pro';
   TextStyle get titleMedium => GoogleFonts.getFont(
         'Readex Pro',
         color: theme.info,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w600,
         fontSize: 18.0,
       );
   String get titleSmallFamily => 'Readex Pro';
   TextStyle get titleSmall => GoogleFonts.getFont(
         'Readex Pro',
         color: theme.info,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         fontSize: 16.0,
       );
   String get labelLargeFamily => 'Readex Pro';
   TextStyle get labelLarge => GoogleFonts.getFont(
         'Readex Pro',
-        color: theme.secondaryText,
-        fontWeight: FontWeight.normal,
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
         fontSize: 16.0,
       );
   String get labelMediumFamily => 'Readex Pro';
   TextStyle get labelMedium => GoogleFonts.getFont(
         'Readex Pro',
-        color: theme.secondaryText,
-        fontWeight: FontWeight.normal,
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
         fontSize: 14.0,
       );
   String get labelSmallFamily => 'Readex Pro';
   TextStyle get labelSmall => GoogleFonts.getFont(
         'Readex Pro',
-        color: theme.secondaryText,
-        fontWeight: FontWeight.normal,
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
         fontSize: 12.0,
       );
   String get bodyLargeFamily => 'Readex Pro';
   TextStyle get bodyLarge => GoogleFonts.getFont(
         'Readex Pro',
         color: theme.primaryText,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w600,
         fontSize: 16.0,
       );
   String get bodyMediumFamily => 'Readex Pro';
   TextStyle get bodyMedium => GoogleFonts.getFont(
         'Readex Pro',
         color: theme.primaryText,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w600,
         fontSize: 14.0,
       );
   String get bodySmallFamily => 'Readex Pro';
   TextStyle get bodySmall => GoogleFonts.getFont(
         'Readex Pro',
         color: theme.primaryText,
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w600,
         fontSize: 12.0,
       );
 }
@@ -277,6 +277,7 @@ extension TextStyleHelper on TextStyle {
     bool useGoogleFonts = true,
     TextDecoration? decoration,
     double? lineHeight,
+    List<Shadow>? shadows,
   }) =>
       useGoogleFonts
           ? GoogleFonts.getFont(
@@ -288,6 +289,7 @@ extension TextStyleHelper on TextStyle {
               fontStyle: fontStyle ?? this.fontStyle,
               decoration: decoration,
               height: lineHeight,
+              shadows: shadows,
             )
           : copyWith(
               fontFamily: fontFamily,
@@ -298,5 +300,6 @@ extension TextStyleHelper on TextStyle {
               fontStyle: fontStyle,
               decoration: decoration,
               height: lineHeight,
+              shadows: shadows,
             );
 }

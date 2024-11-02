@@ -33,9 +33,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -89,6 +87,9 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                         borderRadius: BorderRadius.circular(12.0),
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).primaryText,
+                        ),
                       ),
                       child: Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
@@ -98,8 +99,8 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                           children: [
                             Image.asset(
                               'assets/images/paypal.png',
-                              width: 40.0,
-                              height: 40.0,
+                              width: 35.0,
+                              height: 35.0,
                               fit: BoxFit.cover,
                             ),
                             Padding(
@@ -126,7 +127,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                   Icons.arrow_forward_ios,
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryText,
-                                  size: 24.0,
+                                  size: 20.0,
                                 ),
                               ),
                             ),
@@ -144,6 +145,9 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                         borderRadius: BorderRadius.circular(12.0),
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).primaryText,
+                        ),
                       ),
                       child: Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
@@ -153,8 +157,8 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                           children: [
                             Image.asset(
                               'assets/images/google.jpg',
-                              width: 40.0,
-                              height: 40.0,
+                              width: 35.0,
+                              height: 35.0,
                               fit: BoxFit.contain,
                             ),
                             Padding(
@@ -181,7 +185,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                   Icons.arrow_forward_ios,
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryText,
-                                  size: 24.0,
+                                  size: 20.0,
                                 ),
                               ),
                             ),
@@ -199,6 +203,9 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                         borderRadius: BorderRadius.circular(12.0),
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).primaryText,
+                        ),
                       ),
                       child: Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
@@ -236,7 +243,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                   Icons.arrow_forward_ios,
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryText,
-                                  size: 24.0,
+                                  size: 20.0,
                                 ),
                               ),
                             ),
@@ -254,6 +261,9 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                         borderRadius: BorderRadius.circular(12.0),
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).primaryText,
+                        ),
                       ),
                       child: Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
@@ -291,7 +301,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                   Icons.arrow_forward_ios,
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryText,
-                                  size: 24.0,
+                                  size: 20.0,
                                 ),
                               ),
                             ),

@@ -116,9 +116,9 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
                                     child: Image.asset(
-                                      'assets/images/fijek_4.png',
+                                      'assets/images/Body.png',
                                       width: 492.0,
-                                      height: 422.0,
+                                      height: 335.0,
                                       fit: BoxFit.contain,
                                     ),
                                   ),
@@ -342,7 +342,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                               duration: const Duration(milliseconds: 500),
                               curve: Curves.ease,
                             );
-                            setState(() {});
+                            safeSetState(() {});
                           },
                           effect: smooth_page_indicator.ExpandingDotsEffect(
                             expansionFactor: 2.0,
@@ -467,54 +467,74 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                   Padding(
                     padding:
                         const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
-                    child: Text(
-                      FFLocalizations.of(context).getText(
-                        'lfhxbcs2' /* Signup with Email */,
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        context.pushNamed('auth_3_Create');
+                      },
+                      child: Text(
+                        FFLocalizations.of(context).getText(
+                          'lfhxbcs2' /* Signup with Email */,
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Readex Pro',
+                              fontSize: 12.0,
+                              letterSpacing: 0.0,
+                            ),
                       ),
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Readex Pro',
-                            fontSize: 12.0,
-                            letterSpacing: 0.0,
-                          ),
                     ),
                   ),
-                  RichText(
-                    textScaler: MediaQuery.of(context).textScaler,
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: FFLocalizations.of(context).getText(
-                            'zvvifuk9' /* Already have an account? */,
+                  InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      context.pushNamed('auth_3_Login');
+                    },
+                    child: RichText(
+                      textScaler: MediaQuery.of(context).textScaler,
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: FFLocalizations.of(context).getText(
+                              'zvvifuk9' /* Already have an account? */,
+                            ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  fontSize: 12.0,
+                                  letterSpacing: 0.0,
+                                ),
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    fontSize: 12.0,
-                                    letterSpacing: 0.0,
-                                  ),
-                        ),
-                        TextSpan(
-                          text: FFLocalizations.of(context).getText(
-                            'sc6dxkes' /*  Sign in */,
-                          ),
-                          style:
-                              FlutterFlowTheme.of(context).labelSmall.override(
-                                    fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    letterSpacing: 0.0,
-                                  ),
-                          mouseCursor: SystemMouseCursors.click,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () async {
-                              context.pushNamed('auth_3_Login');
-                            },
-                        )
-                      ],
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Readex Pro',
-                            fontSize: 12.0,
-                            letterSpacing: 0.0,
-                          ),
+                          TextSpan(
+                            text: FFLocalizations.of(context).getText(
+                              'sc6dxkes' /*  Sign in */,
+                            ),
+                            style: FlutterFlowTheme.of(context)
+                                .labelSmall
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  letterSpacing: 0.0,
+                                ),
+                            mouseCursor: SystemMouseCursors.click,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () async {
+                                context.pushNamed('auth_3_Login');
+                              },
+                          )
+                        ],
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Readex Pro',
+                              fontSize: 12.0,
+                              letterSpacing: 0.0,
+                            ),
+                      ),
                     ),
                   ),
                 ],

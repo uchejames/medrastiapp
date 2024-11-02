@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
@@ -74,13 +75,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const NavBarPage() : const WelcomeWidget(),
+          appStateNotifier.loggedIn ? const NavBarPage() : const OnboardingWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? const NavBarPage() : const WelcomeWidget(),
+              appStateNotifier.loggedIn ? const NavBarPage() : const OnboardingWidget(),
         ),
         FFRoute(
           name: 'HomePage',
@@ -130,11 +131,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const PagesWidget(),
         ),
         FFRoute(
-          name: 'ggg',
-          path: '/ggg',
-          builder: (context, params) => const GggWidget(),
-        ),
-        FFRoute(
           name: 'profile',
           path: '/profile',
           builder: (context, params) => params.isEmpty
@@ -146,11 +142,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/store',
           builder: (context, params) =>
               params.isEmpty ? const NavBarPage(initialPage: 'store') : const StoreWidget(),
-        ),
-        FFRoute(
-          name: 'Courses_list',
-          path: '/coursesList',
-          builder: (context, params) => const CoursesListWidget(),
         ),
         FFRoute(
           name: 'discount',
@@ -204,39 +195,112 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const NotificationsPageWidget(),
         ),
         FFRoute(
-          name: 'Course01',
-          path: '/course01',
-          builder: (context, params) => const Course01Widget(),
+          name: 'Coursepdf',
+          path: '/coursepdf',
+          builder: (context, params) => CoursepdfWidget(
+            lessonRef: params.getParam(
+              'lessonRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['Courses', 'lessons'],
+            ),
+          ),
         ),
         FFRoute(
-          name: 'Course0101',
-          path: '/course0101',
-          builder: (context, params) => const Course0101Widget(),
+          name: 'Onboarding',
+          path: '/onboarding',
+          builder: (context, params) => const OnboardingWidget(),
         ),
         FFRoute(
-          name: 'Course01011',
-          path: '/course01011',
-          builder: (context, params) => const Course01011Widget(),
+          name: 'dashboard',
+          path: '/dashboard',
+          builder: (context, params) => const DashboardWidget(),
         ),
         FFRoute(
-          name: 'Course01011Video',
-          path: '/course01011Video',
-          builder: (context, params) => const Course01011VideoWidget(),
+          name: 'Individual_Courses',
+          path: '/individualCourses',
+          asyncParams: {
+            'course': getDoc(['Course'], CourseRecord.fromSnapshot),
+          },
+          builder: (context, params) => IndividualCoursesWidget(
+            courseRef: params.getParam(
+              'courseRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['Course'],
+            ),
+            course: params.getParam(
+              'course',
+              ParamType.Document,
+            ),
+          ),
         ),
         FFRoute(
-          name: 'Docs_and_videos',
-          path: '/docsAndVideos',
-          builder: (context, params) => const DocsAndVideosWidget(),
+          name: 'addCoursePage',
+          path: '/addCoursePage',
+          builder: (context, params) => const AddCoursePageWidget(),
         ),
         FFRoute(
-          name: 'Course01011pdf',
-          path: '/course01011pdf',
-          builder: (context, params) => const Course01011pdfWidget(),
+          name: 'All_courses',
+          path: '/allCourses',
+          builder: (context, params) => const AllCoursesWidget(),
         ),
         FFRoute(
-          name: 'Course01011pdfread',
-          path: '/course01011pdfread',
-          builder: (context, params) => const Course01011pdfreadWidget(),
+          name: 'fullCourseDetails',
+          path: '/fullCourseDetails',
+          asyncParams: {
+            'fullCourseDetails':
+                getDoc(['Courses'], CoursesRecord.fromSnapshot),
+          },
+          builder: (context, params) => FullCourseDetailsWidget(
+            fullCourseDetails: params.getParam(
+              'fullCourseDetails',
+              ParamType.Document,
+            ),
+            lessons: params.getParam(
+              'lessons',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['Courses', 'lesson'],
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'video_player',
+          path: '/videoPlayer',
+          asyncParams: {
+            'courseVideo': getDoc(['Courses'], CoursesRecord.fromSnapshot),
+          },
+          builder: (context, params) => VideoPlayerWidget(
+            courseVideo: params.getParam(
+              'courseVideo',
+              ParamType.Document,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'lesson_upload',
+          path: '/lessonUpload',
+          builder: (context, params) => LessonUploadWidget(
+            courses: params.getParam(
+              'courses',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['Courses'],
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'Courses_contents',
+          path: '/coursesContents',
+          builder: (context, params) => CoursesContentsWidget(
+            lessonsRef: params.getParam(
+              'lessonsRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['Courses'],
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
@@ -408,7 +472,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/welcome';
+            return '/onboarding';
           }
           return null;
         },

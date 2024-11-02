@@ -34,9 +34,7 @@ class _PagesWidgetState extends State<PagesWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -93,6 +91,7 @@ class _PagesWidgetState extends State<PagesWidget> {
                           spreadRadius: 0.0,
                         )
                       ],
+                      borderRadius: BorderRadius.circular(3.0),
                     ),
                     child: Padding(
                       padding:
@@ -113,13 +112,15 @@ class _PagesWidgetState extends State<PagesWidget> {
                             child: Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   2.0, 2.0, 2.0, 2.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(40.0),
-                                child: Image.network(
-                                  currentUserPhoto,
-                                  width: 60.0,
-                                  height: 60.0,
-                                  fit: BoxFit.cover,
+                              child: AuthUserStreamWidget(
+                                builder: (context) => ClipRRect(
+                                  borderRadius: BorderRadius.circular(40.0),
+                                  child: Image.network(
+                                    currentUserPhoto,
+                                    width: 60.0,
+                                    height: 60.0,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),
@@ -201,7 +202,7 @@ class _PagesWidgetState extends State<PagesWidget> {
                           spreadRadius: 0.0,
                         )
                       ],
-                      borderRadius: BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                     alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Padding(
@@ -265,7 +266,7 @@ class _PagesWidgetState extends State<PagesWidget> {
                           spreadRadius: 0.0,
                         )
                       ],
-                      borderRadius: BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                     alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Padding(
@@ -329,7 +330,7 @@ class _PagesWidgetState extends State<PagesWidget> {
                           spreadRadius: 0.0,
                         )
                       ],
-                      borderRadius: BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                     alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Padding(
@@ -393,7 +394,7 @@ class _PagesWidgetState extends State<PagesWidget> {
                           spreadRadius: 0.0,
                         )
                       ],
-                      borderRadius: BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                     alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Padding(
@@ -457,7 +458,7 @@ class _PagesWidgetState extends State<PagesWidget> {
                           spreadRadius: 0.0,
                         )
                       ],
-                      borderRadius: BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                     alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Padding(
@@ -521,7 +522,7 @@ class _PagesWidgetState extends State<PagesWidget> {
                           spreadRadius: 0.0,
                         )
                       ],
-                      borderRadius: BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.circular(5.0),
                     ),
                     alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Padding(

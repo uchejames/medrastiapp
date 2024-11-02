@@ -79,9 +79,7 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -238,11 +236,11 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                 borderSide: BorderSide(
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .secondaryBackground,
+                                                      .primary,
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(12.0),
+                                                    BorderRadius.circular(5.0),
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
@@ -252,7 +250,7 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(12.0),
+                                                    BorderRadius.circular(5.0),
                                               ),
                                               errorBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
@@ -262,7 +260,7 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(12.0),
+                                                    BorderRadius.circular(5.0),
                                               ),
                                               focusedErrorBorder:
                                                   OutlineInputBorder(
@@ -273,7 +271,7 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(12.0),
+                                                    BorderRadius.circular(5.0),
                                               ),
                                               filled: true,
                                               fillColor:
@@ -330,11 +328,11 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                 borderSide: BorderSide(
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .secondaryBackground,
+                                                      .primary,
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(12.0),
+                                                    BorderRadius.circular(5.0),
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
@@ -344,7 +342,7 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(12.0),
+                                                    BorderRadius.circular(5.0),
                                               ),
                                               errorBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
@@ -354,7 +352,7 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(12.0),
+                                                    BorderRadius.circular(5.0),
                                               ),
                                               focusedErrorBorder:
                                                   OutlineInputBorder(
@@ -365,14 +363,14 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(12.0),
+                                                    BorderRadius.circular(5.0),
                                               ),
                                               filled: true,
                                               fillColor:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryBackground,
                                               suffixIcon: InkWell(
-                                                onTap: () => setState(
+                                                onTap: () => safeSetState(
                                                   () => _model
                                                           .passwordVisibility =
                                                       !_model
@@ -442,11 +440,11 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                 borderSide: BorderSide(
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .secondaryBackground,
+                                                      .primary,
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(12.0),
+                                                    BorderRadius.circular(5.0),
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
@@ -456,7 +454,7 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(12.0),
+                                                    BorderRadius.circular(5.0),
                                               ),
                                               errorBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
@@ -466,7 +464,7 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(12.0),
+                                                    BorderRadius.circular(5.0),
                                               ),
                                               focusedErrorBorder:
                                                   OutlineInputBorder(
@@ -477,14 +475,14 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(12.0),
+                                                    BorderRadius.circular(5.0),
                                               ),
                                               filled: true,
                                               fillColor:
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryBackground,
                                               suffixIcon: InkWell(
-                                                onTap: () => setState(
+                                                onTap: () => safeSetState(
                                                   () => _model
                                                           .passwordConfirmVisibility =
                                                       !_model
@@ -706,7 +704,7 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                             ),
                                             icon: const Icon(
                                               Icons.phone_sharp,
-                                              size: 15.0,
+                                              size: 25.0,
                                             ),
                                             options: FFButtonOptions(
                                               width: double.infinity,
@@ -731,18 +729,18 @@ class _Auth3CreateWidgetState extends State<Auth3CreateWidget>
                                               borderSide: BorderSide(
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .alternate,
+                                                        .primary,
                                                 width: 2.0,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(12.0),
+                                                  BorderRadius.circular(5.0),
                                               hoverColor:
                                                   FlutterFlowTheme.of(context)
                                                       .tertiary,
                                               hoverBorderSide: BorderSide(
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .alternate,
+                                                        .primary,
                                                 width: 2.0,
                                               ),
                                               hoverTextColor:

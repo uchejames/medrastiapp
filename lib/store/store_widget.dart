@@ -1,7 +1,9 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:text_search/text_search.dart';
 import 'store_model.dart';
 export 'store_model.dart';
 
@@ -33,9 +35,7 @@ class _StoreWidgetState extends State<StoreWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -87,10 +87,44 @@ class _StoreWidgetState extends State<StoreWidget> {
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             160.0, 0.0, 0.0, 0.0),
-                        child: Icon(
-                          Icons.search_rounded,
-                          color: FlutterFlowTheme.of(context).error,
-                          size: 30.0,
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            await queryUsersRecordOnce()
+                                .then(
+                                  (records) => _model.simpleSearchResults =
+                                      TextSearch(
+                                    records
+                                        .map(
+                                          (record) =>
+                                              TextSearchItem.fromTerms(record, [
+                                            record.email,
+                                            record.displayName,
+                                            record.uid,
+                                            record.phoneNumber,
+                                            record.shortDescription,
+                                            record.role,
+                                            record.title
+                                          ]),
+                                        )
+                                        .toList(),
+                                  )
+                                          .search('Courses')
+                                          .map((r) => r.object)
+                                          .toList(),
+                                )
+                                .onError(
+                                    (_, __) => _model.simpleSearchResults = [])
+                                .whenComplete(() => safeSetState(() {}));
+                          },
+                          child: Icon(
+                            Icons.search_rounded,
+                            color: FlutterFlowTheme.of(context).error,
+                            size: 30.0,
+                          ),
                         ),
                       ),
                       Padding(
@@ -157,7 +191,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                         spreadRadius: 0.0,
                                       )
                                     ],
-                                    borderRadius: BorderRadius.circular(12.0),
+                                    borderRadius: BorderRadius.circular(5.0),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
@@ -359,7 +393,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                         spreadRadius: 0.0,
                                       )
                                     ],
-                                    borderRadius: BorderRadius.circular(12.0),
+                                    borderRadius: BorderRadius.circular(5.0),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
@@ -486,9 +520,9 @@ class _StoreWidgetState extends State<StoreWidget> {
                                                       ),
                                                     ),
                                                     FFButtonWidget(
-                                                      onPressed: () {
-                                                        print(
-                                                            'Button pressed ...');
+                                                      onPressed: () async {
+                                                        context.pushNamed(
+                                                            'Pricingplans');
                                                       },
                                                       text: FFLocalizations.of(
                                                               context)
@@ -573,7 +607,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                                         spreadRadius: 0.0,
                                       )
                                     ],
-                                    borderRadius: BorderRadius.circular(12.0),
+                                    borderRadius: BorderRadius.circular(5.0),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
@@ -700,9 +734,9 @@ class _StoreWidgetState extends State<StoreWidget> {
                                                       ),
                                                     ),
                                                     FFButtonWidget(
-                                                      onPressed: () {
-                                                        print(
-                                                            'Button pressed ...');
+                                                      onPressed: () async {
+                                                        context.pushNamed(
+                                                            'Pricingplans');
                                                       },
                                                       text: FFLocalizations.of(
                                                               context)
@@ -798,7 +832,7 @@ class _StoreWidgetState extends State<StoreWidget> {
                           alignment: const AlignmentDirectional(-1.0, 0.0),
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 20.0, 0.0, 20.0),
+                                15.0, 20.0, 0.0, 20.0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
                               child: Image.asset(

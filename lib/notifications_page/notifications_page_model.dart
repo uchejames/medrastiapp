@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class NotificationsPageModel extends FlutterFlowModel<NotificationsPageWidget> {
   ///  State fields for stateful widgets in this page.
 
-  final unfocusNode = FocusNode();
   // State field(s) for Switch widget.
   bool? switchValue1;
   // State field(s) for Switch widget.
@@ -29,7 +28,5 @@ class NotificationsPageModel extends FlutterFlowModel<NotificationsPageWidget> {
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {
-    unfocusNode.dispose();
-  }
+  void dispose() {}
 }

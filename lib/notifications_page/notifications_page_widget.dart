@@ -44,9 +44,7 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -132,7 +130,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                             Switch(
                               value: _model.switchValue1!,
                               onChanged: (newValue) async {
-                                setState(() => _model.switchValue1 = newValue);
+                                safeSetState(
+                                    () => _model.switchValue1 = newValue);
                               },
                               activeColor: FlutterFlowTheme.of(context).error,
                               activeTrackColor:
@@ -177,7 +176,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                             Switch(
                               value: _model.switchValue2!,
                               onChanged: (newValue) async {
-                                setState(() => _model.switchValue2 = newValue);
+                                safeSetState(
+                                    () => _model.switchValue2 = newValue);
                               },
                               activeColor: FlutterFlowTheme.of(context).error,
                               activeTrackColor:
@@ -222,7 +222,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                             Switch(
                               value: _model.switchValue3!,
                               onChanged: (newValue) async {
-                                setState(() => _model.switchValue3 = newValue);
+                                safeSetState(
+                                    () => _model.switchValue3 = newValue);
                               },
                               activeColor: FlutterFlowTheme.of(context).error,
                               activeTrackColor:
@@ -267,7 +268,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                             Switch(
                               value: _model.switchValue4!,
                               onChanged: (newValue) async {
-                                setState(() => _model.switchValue4 = newValue);
+                                safeSetState(
+                                    () => _model.switchValue4 = newValue);
                               },
                               activeColor: FlutterFlowTheme.of(context).error,
                               activeTrackColor:
@@ -312,7 +314,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                             Switch(
                               value: _model.switchValue5!,
                               onChanged: (newValue) async {
-                                setState(() => _model.switchValue5 = newValue);
+                                safeSetState(
+                                    () => _model.switchValue5 = newValue);
                               },
                               activeColor: FlutterFlowTheme.of(context).error,
                               activeTrackColor:
@@ -357,7 +360,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                             Switch(
                               value: _model.switchValue6!,
                               onChanged: (newValue) async {
-                                setState(() => _model.switchValue6 = newValue);
+                                safeSetState(
+                                    () => _model.switchValue6 = newValue);
                               },
                               activeColor: FlutterFlowTheme.of(context).error,
                               activeTrackColor:
@@ -402,7 +406,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                             Switch(
                               value: _model.switchValue7!,
                               onChanged: (newValue) async {
-                                setState(() => _model.switchValue7 = newValue);
+                                safeSetState(
+                                    () => _model.switchValue7 = newValue);
                               },
                               activeColor: FlutterFlowTheme.of(context).error,
                               activeTrackColor:
@@ -447,7 +452,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                             Switch(
                               value: _model.switchValue8!,
                               onChanged: (newValue) async {
-                                setState(() => _model.switchValue8 = newValue);
+                                safeSetState(
+                                    () => _model.switchValue8 = newValue);
                               },
                               activeColor: FlutterFlowTheme.of(context).error,
                               activeTrackColor:
@@ -492,7 +498,8 @@ class _NotificationsPageWidgetState extends State<NotificationsPageWidget> {
                             Switch(
                               value: _model.switchValue9!,
                               onChanged: (newValue) async {
-                                setState(() => _model.switchValue9 = newValue);
+                                safeSetState(
+                                    () => _model.switchValue9 = newValue);
                               },
                               activeColor: FlutterFlowTheme.of(context).error,
                               activeTrackColor:

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -77,18 +78,47 @@ class FFLocalizations {
   };
 }
 
+/// Used if the locale is not supported by GlobalMaterialLocalizations.
+class FallbackMaterialLocalizationDelegate
+    extends LocalizationsDelegate<MaterialLocalizations> {
+  const FallbackMaterialLocalizationDelegate();
+
+  @override
+  bool isSupported(Locale locale) => _isSupportedLocale(locale);
+
+  @override
+  Future<MaterialLocalizations> load(Locale locale) async =>
+      SynchronousFuture<MaterialLocalizations>(
+        const DefaultMaterialLocalizations(),
+      );
+
+  @override
+  bool shouldReload(FallbackMaterialLocalizationDelegate old) => false;
+}
+
+/// Used if the locale is not supported by GlobalCupertinoLocalizations.
+class FallbackCupertinoLocalizationDelegate
+    extends LocalizationsDelegate<CupertinoLocalizations> {
+  const FallbackCupertinoLocalizationDelegate();
+
+  @override
+  bool isSupported(Locale locale) => _isSupportedLocale(locale);
+
+  @override
+  Future<CupertinoLocalizations> load(Locale locale) =>
+      SynchronousFuture<CupertinoLocalizations>(
+        const DefaultCupertinoLocalizations(),
+      );
+
+  @override
+  bool shouldReload(FallbackCupertinoLocalizationDelegate old) => false;
+}
+
 class FFLocalizationsDelegate extends LocalizationsDelegate<FFLocalizations> {
   const FFLocalizationsDelegate();
 
   @override
-  bool isSupported(Locale locale) {
-    final language = locale.toString();
-    return FFLocalizations.languages().contains(
-      language.endsWith('_')
-          ? language.substring(0, language.length - 1)
-          : language,
-    );
-  }
+  bool isSupported(Locale locale) => _isSupportedLocale(locale);
 
   @override
   Future<FFLocalizations> load(Locale locale) =>
@@ -105,144 +135,135 @@ Locale createLocale(String language) => language.contains('_')
       )
     : Locale(language);
 
+bool _isSupportedLocale(Locale locale) {
+  final language = locale.toString();
+  return FFLocalizations.languages().contains(
+    language.endsWith('_')
+        ? language.substring(0, language.length - 1)
+        : language,
+  );
+}
+
 final kTranslationsMap = <Map<String, Map<String, String>>>[
   // HomePage
   {
     'f3t498a1': {
       'en': 'Explore Courses',
       'ar': 'استكشاف الدورات',
-      'fr': '',
+      'fr': 'Explorer les cours',
     },
     'dr4ygcxp': {
       'en': 'Pricing Plans',
       'ar': 'خطط التسعير',
-      'fr': '',
+      'fr': 'Plans tarifaires',
     },
     'mryv89xh': {
-      'en': 'Change Exam',
+      'en': 'Change Class',
       'ar': 'تغيير الامتحان',
-      'fr': '',
-    },
-    '30o7tvph': {
-      'en': 'Practice Reminder',
-      'ar': 'تذكير الممارسة',
-      'fr': '',
+      'fr': 'Changer d\'examen',
     },
     'ynrkfxuh': {
       'en': 'My Analysis',
       'ar': 'تحليلي',
-      'fr': '',
+      'fr': 'Mon analyse',
     },
     'eft5v713': {
       'en': 'Purchases',
       'ar': 'المشتريات',
-      'fr': '',
+      'fr': 'Achats',
     },
     'id5abqt5': {
       'en': 'Upgrade plan',
       'ar': 'خطة الترقية',
-      'fr': '',
+      'fr': 'Plan de mise à niveau',
     },
     'ugsdc65l': {
       'en': 'Messages',
       'ar': 'رسائل',
-      'fr': '',
+      'fr': 'messages',
     },
     'wix5g5p8': {
       'en': 'Need help',
       'ar': 'تحتاج مساعدة',
-      'fr': '',
+      'fr': 'Besoin d\'aide',
     },
     'ysaua8pq': {
       'en': 'Medrasti',
       'ar': 'ميدراستي',
-      'fr': '',
+      'fr': 'Médrasti',
     },
     'ws7vjz3a': {
       'en': 'Docs & Videos',
       'ar': 'المستندات ومقاطع الفيديو',
-      'fr': '',
+      'fr': 'Documents et vidéos',
     },
     '1sb3f3sy': {
       'en': 'Explore Courses',
       'ar': 'استكشاف الدورات',
-      'fr': '',
-    },
-    'ld9o00w5': {
-      'en': 'My courses',
-      'ar': 'دوراتي',
-      'fr': '',
-    },
-    '2llpi0hc': {
-      'en': 'Introduction to Psychology',
-      'ar': 'مدخل إلى علم النفس',
-      'fr': '',
+      'fr': 'Explorer les cours',
     },
     'uhhlkov9': {
       'en': 'Join Medasti',
       'ar': 'انضم إلى مداستي',
-      'fr': '',
+      'fr': 'Rejoignez Medasti',
     },
     'y4gdld6u': {
       'en': 'Join Medasti Premium Now',
       'ar': 'انضم إلى Medasti Premium الآن',
-      'fr': '',
+      'fr': 'Rejoignez Medasti Premium maintenant',
     },
     'e62s4n0o': {
       'en': 'View plans',
       'ar': 'عرض الخطط',
-      'fr': '',
+      'fr': 'Voir les forfaits',
     },
-    'aymih2y6': {
-      'en': 'Courses you haven\'t viewed',
-      'ar': 'الدورات التي لم تشاهدها',
-      'fr': '',
-    },
-    'jzg70q40': {
-      'en': 'How to prepare for GMAT',
-      'ar': 'كيفية الاستعداد لامتحان GMAT',
-      'fr': '',
+    'ld9o00w5': {
+      'en': 'My courses',
+      'ar': 'دوراتي',
+      'fr': 'Mes cours',
     },
     'ejj6l5qj': {
       'en': 'View All',
       'ar': 'عرض الكل',
-      'fr': '',
+      'fr': 'Voir tout',
     },
     'l5quy1d1': {
       'en': 'Other Options',
       'ar': 'خيارات أخرى',
-      'fr': '',
+      'fr': 'Autres options',
     },
     'wzvesdkj': {
-      'en': 'Introduction to Psychology',
+      'en': 'Pricing plans',
       'ar': 'مدخل إلى علم النفس',
-      'fr': '',
+      'fr': 'introduction à la psychologie',
     },
     'qb6hna97': {
       'en': 'Schedule a call with us',
       'ar': 'جدولة مكالمة معنا',
-      'fr': '',
+      'fr': 'Planifiez un appel avec nous',
     },
     '9whl04a0': {
       'en': 'Explore courses',
       'ar': 'استكشاف الدورات',
-      'fr': '',
+      'fr': 'Explorer les cours',
     },
     'ypl1u7ax': {
       'en': 'FAQ',
       'ar': 'التعليمات',
-      'fr': '',
+      'fr': 'FAQ',
     },
     'mzzpbpdg': {
       'en':
           'Medrasti  is a worldwide educational mobile application designed to give learners the best.',
-      'ar': '',
-      'fr': '',
+      'ar':
+          'Medrasti هو تطبيق تعليمي عالمي للهاتف المحمول مصمم لمنح المتعلمين الأفضل.',
+      'fr':
+          'Medrasti est une application mobile éducative mondiale conçue pour offrir le meilleur aux apprenants.',
     },
     'uu4miwy2': {
       'en': 'Home',
       'ar': 'بيت',
-      'fr': '',
+      'fr': 'Maison',
     },
   },
   // auth_3_Create
@@ -250,57 +271,57 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'wowwujas': {
       'en': 'Create an account',
       'ar': 'إنشاء حساب',
-      'fr': '',
+      'fr': 'Créer un compte',
     },
     '96y3ikkj': {
       'en': 'Let\'s get started by filling out the form ',
       'ar': 'لنبدأ بملء النموذج',
-      'fr': '',
+      'fr': 'Commençons par remplir le formulaire',
     },
     'l2mdlgdx': {
       'en': 'Email',
       'ar': 'بريد إلكتروني',
-      'fr': '',
+      'fr': 'E-mail',
     },
     'pzb9w4n6': {
       'en': 'Password',
       'ar': 'كلمة المرور',
-      'fr': '',
+      'fr': 'Mot de passe',
     },
     'aie8xyqz': {
       'en': 'Confirm Password',
       'ar': 'تأكيد كلمة المرور',
-      'fr': '',
+      'fr': 'Confirmez le mot de passe',
     },
     'qty5cs9u': {
       'en': 'Create Account',
       'ar': 'إنشاء حساب',
-      'fr': '',
+      'fr': 'Créer un compte',
     },
     'g8lkmqtd': {
       'en': 'Already have an account? ',
       'ar': 'هل لديك حساب؟',
-      'fr': '',
+      'fr': 'Vous avez déjà un compte?',
     },
     'zjd35wmj': {
       'en': 'Sign In here',
       'ar': 'تسجيل الدخول هنا',
-      'fr': '',
+      'fr': 'Se connecter ici',
     },
     '05d729wx': {
       'en': 'Continue with Phone',
       'ar': 'تواصل مع الهاتف',
-      'fr': '',
+      'fr': 'Continuer avec le téléphone',
     },
     'e4crokko': {
       'en': 'Continue with Google',
       'ar': 'تواصل مع جوجل',
-      'fr': '',
+      'fr': 'Continuer avec Google',
     },
     'n65hcdtw': {
       'en': 'Home',
       'ar': 'بيت',
-      'fr': '',
+      'fr': 'Maison',
     },
   },
   // auth_3_Login
@@ -308,57 +329,57 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'e31acdfw': {
       'en': 'Login',
       'ar': 'تسجيل الدخول',
-      'fr': '',
+      'fr': 'Se connecter',
     },
     'danctruw': {
       'en': 'Welcome back',
       'ar': 'مرحبًا بعودتك',
-      'fr': '',
+      'fr': 'Content de te revoir',
     },
     'rym4i3iy': {
       'en': 'Email',
       'ar': 'بريد إلكتروني',
-      'fr': '',
+      'fr': 'E-mail',
     },
     'd8h8rdhq': {
       'en': 'Password',
       'ar': 'كلمة المرور',
-      'fr': '',
+      'fr': 'Mot de passe',
     },
     'rasd7erx': {
       'en': 'Login',
       'ar': 'تسجيل الدخول',
-      'fr': '',
+      'fr': 'Se connecter',
     },
     'wyitjkco': {
       'en': 'Don\'t have an account ',
-      'ar': 'هل لديك حساب؟',
-      'fr': '',
+      'ar': 'ليس لديك حساب',
+      'fr': 'Je n\'ai pas de compte',
     },
     'z17xpnsa': {
       'en': 'Sign up here',
-      'ar': 'تسجيل الدخول هنا',
-      'fr': '',
+      'ar': 'سجل هنا',
+      'fr': 'Inscrivez-vous ici',
     },
     '6243k8qb': {
       'en': 'Continue with Phone',
       'ar': 'تواصل مع الهاتف',
-      'fr': '',
+      'fr': 'Continuer avec le téléphone',
     },
     '6b9e1oci': {
       'en': 'Forgot Password? ',
       'ar': 'هل نسيت كلمة السر؟',
-      'fr': '',
+      'fr': 'Mot de passe oublié?',
     },
     '8k4v2sqr': {
       'en': 'Reset It Now',
       'ar': 'أعد ضبطه الآن',
-      'fr': '',
+      'fr': 'Réinitialisez-le maintenant',
     },
     'etwx99rl': {
       'en': 'Home',
       'ar': 'بيت',
-      'fr': '',
+      'fr': 'Maison',
     },
   },
   // auth_3_phone
@@ -366,27 +387,37 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'x5arn8df': {
       'en': 'Login with Phone',
       'ar': 'تسجيل الدخول بالهاتف',
-      'fr': '',
+      'fr': 'Connectez-vous avec le téléphone',
     },
     'oaih76gt': {
       'en': 'Input your number below in order to login.',
       'ar': 'أدخل رقمك أدناه لتسجيل الدخول.',
+      'fr': 'Saisissez votre numéro ci-dessous pour vous connecter.',
+    },
+    'd1b1s27z': {
+      'en': '+222',
+      'ar': '',
       'fr': '',
     },
-    'gfolyxwh': {
-      'en': 'Your phone number...',
-      'ar': 'رقم تليفونك...',
+    'op3c3fek': {
+      'en': 'Enter mobile number',
+      'ar': '',
       'fr': '',
     },
     'zi1ls7ww': {
       'en': 'Continue',
       'ar': 'يكمل',
+      'fr': 'Continuer',
+    },
+    '8310li6l': {
+      'en': 'I agree to the Terms of use and Privacy \npolicy of medrasti',
+      'ar': '',
       'fr': '',
     },
     'fgppdpm4': {
       'en': 'Home',
       'ar': 'بيت',
-      'fr': '',
+      'fr': 'Maison',
     },
   },
   // auth_3_verifyPhone
@@ -394,27 +425,27 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'rxd8qcdr': {
       'en': 'Verification Code',
       'ar': 'رمز التحقق',
-      'fr': '',
+      'fr': 'Le code de vérification',
     },
     '9vszdyir': {
       'en': 'Enter the 6 digit code that you received at: ',
       'ar': 'أدخل الرمز المكون من 6 أرقام الذي تلقيته على:',
-      'fr': '',
+      'fr': 'Entrez le code à 6 chiffres que vous avez reçu à :',
     },
     '4v7edpgt': {
       'en': ' change number?',
       'ar': 'تغيير رقم؟',
-      'fr': '',
+      'fr': 'changer de numéro ?',
     },
     '04hux788': {
       'en': 'Verify Code',
       'ar': 'التحقق من كود',
-      'fr': '',
+      'fr': 'Vérifier le code',
     },
     'wa2q263d': {
       'en': 'Home',
       'ar': 'بيت',
-      'fr': '',
+      'fr': 'Maison',
     },
   },
   // auth_3_ForgotPassword
@@ -422,111 +453,112 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'evb9gt3e': {
       'en': 'Forgot Password',
       'ar': 'هل نسيت كلمة السر',
-      'fr': '',
+      'fr': 'Mot de passe oublié',
     },
     '8vht0f3h': {
       'en': 'Enter your email below in order be sent a reset password link.',
       'ar':
           'أدخل بريدك الإلكتروني أدناه حتى يتم إرسال رابط إعادة تعيين كلمة المرور.',
-      'fr': '',
+      'fr':
+          'Entrez votre e-mail ci-dessous pour recevoir un lien de réinitialisation du mot de passe.',
     },
     'axecsv6v': {
       'en': 'Your email address...',
       'ar': 'عنوان بريدك  الإلكتروني...',
-      'fr': '',
+      'fr': 'Votre adresse e-mail...',
     },
     '5l85bldf': {
       'en': 'Send Reset Link',
       'ar': 'أرسل رابط إعادة الضبط',
-      'fr': '',
+      'fr': 'Envoyer le lien de réinitialisation',
     },
     'ejkdaxgn': {
       'en': 'Home',
       'ar': 'بيت',
-      'fr': '',
+      'fr': 'Maison',
     },
   },
   // welcome
   {
     'daucxync': {
       'en': 'Prepare with courses  divided into sessions',
-      'ar': 'كل ما تحتاجه في مكان واحد',
-      'fr': '',
+      'ar': 'الاستعداد مع دورات مقسمة إلى جلسات',
+      'fr': 'Préparez-vous avec des cours divisés en séances',
     },
     'jk1pjnfb': {
       'en':
           'Learning sessions from the cleanest courses prepared by the best professors',
-      'ar':
-          'اجتز امتحانك التالي بأقل قدر من الوقت والجهد والمال الذي يتم إنفاقه',
-      'fr': '',
+      'ar': 'جلسات تعلم من أنقى الدورات التي أعدها أفضل الأساتذة',
+      'fr':
+          'Séances d\'apprentissage à partir des cours les plus propres préparés par les meilleurs professeurs',
     },
     'a3cpuw43': {
       'en': 'Video lectures and notes to clarify your cconcepts',
-      'ar': 'تجربة تعليمية رائعة',
-      'fr': '',
+      'ar': 'محاضرات فيديو وملاحظات لتوضيح مفاهيمك',
+      'fr': 'Conférences vidéo et notes pour clarifier vos concepts',
     },
     'fdaw5r5m': {
       'en': 'Learn from the best professors with great videos and useful notes',
-      'ar': 'استمتع بأفضل تجربة تعليمية يمكنك العثور عليها في أي مكان',
-      'fr': '',
+      'ar': 'تعلم من أفضل الأساتذة بمقاطع فيديو رائعة وملاحظات مفيدة',
+      'fr':
+          'Apprenez des meilleurs professeurs avec de superbes vidéos et des notes utiles',
     },
     'vb079e98': {
       'en': 'Get solutions ',
-      'ar': 'الاستعداد للاختبار والامتحانات في سهولة',
-      'fr': '',
+      'ar': 'احصل على الحلول',
+      'fr': 'Obtenez des solutions',
     },
     'qj95stxi': {
       'en': 'Join our community of many students and professors',
-      'ar':
-          'الوصول إلى أفضل المواد والدورات الدراسية للامتحانات والاختبارات الخاصة بك',
-      'fr': '',
+      'ar': 'انضم إلى مجتمعنا الذي يضم العديد من الطلاب والأساتذة',
+      'fr': 'Rejoignez notre communauté de nombreux étudiants et professeurs',
     },
     '09myj9xl': {
       'en': 'All you need in one Place pass',
-      'ar': 'الاستعداد للاختبار والامتحانات في سهولة',
-      'fr': '',
+      'ar': 'كل ما تحتاجه في مكان واحد',
+      'fr': 'Tout ce dont vous avez besoin dans un seul pass Place',
     },
     'zpuic71l': {
       'en':
           'Pass your next exam with less effort, less time and less financial experience',
-      'ar':
-          'الوصول إلى أفضل المواد والدورات الدراسية للامتحانات والاختبارات الخاصة بك',
-      'fr': '',
+      'ar': 'اجتاز امتحانك التالي بجهد أقل ووقت أقل وخبرة مالية أقل',
+      'fr':
+          'Réussissez votre prochain examen avec moins d\'efforts, moins de temps et moins d\'expérience financière',
     },
     'y63hpemr': {
       'en': 'Continue with Google',
       'ar': 'تواصل مع جوجل',
-      'fr': '',
+      'fr': 'Continuer avec Google',
     },
     '0v6xx4r7': {
       'en': 'Sign up Apple',
-      'ar': 'تواصل مع جوجل',
-      'fr': '',
+      'ar': 'قم بالتسجيل في شركة أبل',
+      'fr': 'S\'inscrire Apple',
     },
     'lfhxbcs2': {
       'en': 'Signup with Email',
       'ar': 'سجل عن طريق البريد الإلكتروني',
-      'fr': '',
+      'fr': 'S\'enregistrer avec l\'adresse e-mail',
     },
     'zvvifuk9': {
       'en': 'Already have an account?',
-      'ar': 'هل لديك حساب؟ تسجيل الدخول',
-      'fr': '',
+      'ar': 'هل لديك حساب؟',
+      'fr': 'Vous avez déjà un compte?',
     },
     'sc6dxkes': {
       'en': ' Sign in',
-      'ar': '',
-      'fr': '',
+      'ar': 'تسجيل الدخول',
+      'fr': 'Se connecter',
     },
     'ee085z9c': {
       'en': 'Already have an account? Sign in',
       'ar': 'هل لديك حساب؟ تسجيل الدخول',
-      'fr': '',
+      'fr': 'Vous avez déjà un compte? Se connecter',
     },
     'gqnjkki7': {
       'en': 'Home',
       'ar': 'بيت',
-      'fr': '',
+      'fr': 'Maison',
     },
   },
   // pages
@@ -534,180 +566,52 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'da0yuy69': {
       'en': 'Dr. Emily Stone',
       'ar': 'دكتور إميلي ستون',
-      'fr': '',
+      'fr': 'Dr Emily Stone',
     },
     'p1vwjms1': {
       'en': 'emily.stone@university.edu',
       'ar': 'emily.stone@university.edu',
-      'fr': '',
+      'fr': 'emily.stone@university.edu',
     },
     'nyewklez': {
       'en': 'Course Overview',
       'ar': 'نظرة عامة على الدورة',
-      'fr': '',
+      'fr': 'Aperçu du cours',
     },
     'z36wc0p8': {
       'en': 'Introduction to Psychology',
       'ar': 'مدخل إلى علم النفس',
-      'fr': '',
+      'fr': 'introduction à la psychologie',
     },
     'wnjat5sy': {
       'en': 'Class Schedule',
       'ar': 'جدول الحصص',
-      'fr': '',
+      'fr': 'Horaire de cours',
     },
     'q2gg8t6n': {
       'en': 'Student Forum',
       'ar': 'المنتدى الطلابي',
-      'fr': '',
+      'fr': 'Forum étudiant',
     },
     'z4ktyayr': {
       'en': 'Assignments',
       'ar': 'تعيينات',
-      'fr': '',
+      'fr': 'Missions',
     },
     'iqvfy2h2': {
       'en': 'Lecture Videos',
       'ar': 'فيديوهات المحاضرات',
-      'fr': '',
+      'fr': 'Vidéos de conférences',
     },
     '00crk4v8': {
       'en': 'FAQ',
       'ar': 'التعليمات',
-      'fr': '',
+      'fr': 'FAQ',
     },
     '2x3dkxyf': {
       'en': 'Course Details',
       'ar': 'تفاصيل الدورة',
-      'fr': '',
-    },
-  },
-  // ggg
-  {
-    'f3lzispp': {
-      'en': 'Featured Courses',
-      'ar': 'الدورات المميزة',
-      'fr': '',
-    },
-    'stumluju': {
-      'en': 'Learn to design beautiful websites with the latest technologies.',
-      'ar': 'تعلم كيفية تصميم مواقع الويب الجميلة بأحدث التقنيات.',
-      'fr': '',
-    },
-    'd2a0dyyo': {
-      'en': 'Strategies to boost your online presence and engagement.',
-      'ar': 'استراتيجيات لتعزيز تواجدك ومشاركتك على الإنترنت.',
-      'fr': '',
-    },
-    '8etpbxar': {
-      'en': 'Strategies to boost your online presence and engagement.',
-      'ar': 'استراتيجيات لتعزيز تواجدك ومشاركتك على الإنترنت.',
-      'fr': '',
-    },
-    'ed2v9s8j': {
-      'en': 'Ultimate Web Design Course',
-      'ar': 'الدورة النهائية لتصميم الويب',
-      'fr': '',
-    },
-    'ui6ujscz': {
-      'en': '\$99',
-      'ar': '99 دولارًا',
-      'fr': '',
-    },
-    'yrgfh302': {
-      'en': '50% off',
-      'ar': 'خصم 50',
-      'fr': '',
-    },
-    'cdahsp8s': {
-      'en': 'Advanced Programming Techniques',
-      'ar': 'تقنيات البرمجة المتقدمة',
-      'fr': '',
-    },
-    'u9xrzm5r': {
-      'en': 'Master complex algorithms and data structures.',
-      'ar': 'إتقان الخوارزميات المعقدة وهياكل البيانات.',
-      'fr': '',
-    },
-    '20ceeh42': {
-      'en': '\$120',
-      'ar': '120 دولارًا',
-      'fr': '',
-    },
-    '58bmfx3y': {
-      'en': '25% off',
-      'ar': 'خصم 25%',
-      'fr': '',
-    },
-    'h2zjuxym': {
-      'en': 'Digital Marketing Essentials',
-      'ar': 'أساسيات التسويق الرقمي',
-      'fr': '',
-    },
-    'soim4dlh': {
-      'en': '\$80',
-      'ar': '80 دولارًا',
-      'fr': '',
-    },
-    'iuqmux0y': {
-      'en': '30% off',
-      'ar': 'تخفيض 30',
-      'fr': '',
-    },
-    '04x5q9fj': {
-      'en': 'Browse All Courses',
-      'ar': 'تصفح جميع الدورات',
-      'fr': '',
-    },
-    'qizt6fdg': {
-      'en': 'Introduction to Python',
-      'ar': 'مقدمة إلى بايثون',
-      'fr': '',
-    },
-    'vddun0wf': {
-      'en': 'Start your programming journey with Python.',
-      'ar': 'ابدأ رحلتك البرمجية مع بايثون.',
-      'fr': '',
-    },
-    'clnwpjci': {
-      'en': '\$45',
-      'ar': '45 دولارًا',
-      'fr': '',
-    },
-    '53emfx6y': {
-      'en': 'UX/UI Design Fundamentals',
-      'ar': 'أساسيات تصميم تجربة المستخدم/واجهة المستخدم',
-      'fr': '',
-    },
-    'cijcjs8l': {
-      'en': 'Create intuitive and beautiful user experiences.',
-      'ar': 'إنشاء تجارب مستخدم بديهية وجميلة.',
-      'fr': '',
-    },
-    'rw9w7an0': {
-      'en': '\$70',
-      'ar': '70 دولارًا',
-      'fr': '',
-    },
-    'tv827b5j': {
-      'en': 'Project Management Mastery',
-      'ar': 'إتقان إدارة المشاريع',
-      'fr': '',
-    },
-    'z57611iz': {
-      'en': 'Lead projects to success with proven methodologies.',
-      'ar': 'قيادة المشاريع إلى النجاح باستخدام منهجيات مجربة.',
-      'fr': '',
-    },
-    'h7f5yto6': {
-      'en': '\$110',
-      'ar': '110 دولار',
-      'fr': '',
-    },
-    'kdp685r4': {
-      'en': 'Courses',
-      'ar': 'الدورات',
-      'fr': '',
+      'fr': 'Détails du cours',
     },
   },
   // profile
@@ -715,67 +619,72 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'qcmz2tyc': {
       'en': 'Edit profile',
       'ar': 'تعديل الملف الشخصي',
-      'fr': '',
+      'fr': 'Editer le profil',
     },
     'tt33hhik': {
       'en': 'Upgrade',
       'ar': 'يرقي',
-      'fr': '',
+      'fr': 'Mise à niveau',
     },
     'lb2qogi6': {
       'en': 'Account',
       'ar': 'حساب',
-      'fr': '',
+      'fr': 'Compte',
     },
     '8389t992': {
       'en': 'Edit Profile',
       'ar': 'تعديل الملف الشخصي',
-      'fr': '',
+      'fr': 'Editer le profil',
     },
     'jnl8758a': {
       'en': 'Payment Options',
       'ar': 'خيارات الدفع',
-      'fr': '',
+      'fr': 'Options de paiement',
     },
-    '6byvlonx': {
-      'en': 'Language',
-      'ar': 'لغة',
+    'cqutspv6': {
+      'en': 'My Wallet',
+      'ar': '',
       'fr': '',
     },
     'csz81ld8': {
       'en': 'Notification Settings',
       'ar': 'إعدادات الإشعار',
-      'fr': '',
+      'fr': 'Paramètres de notification',
     },
     '8xiw1oea': {
+      'en': 'Language',
+      'ar': 'لغة',
+      'fr': 'Langue',
+    },
+    '7jgi74cr': {
       'en': 'General',
       'ar': 'عام',
-      'fr': '',
+      'fr': 'Général',
     },
     '3t1i9dwy': {
       'en': 'Support',
       'ar': 'يدعم',
-      'fr': '',
+      'fr': 'Soutien',
     },
     'iqw30oiz': {
       'en': 'Terms of Service',
       'ar': 'شروط الخدمة',
-      'fr': '',
+      'fr': 'Conditions d\'utilisation',
     },
-    'gbv3n0uu': {
-      'en': 'Invite Friends',
-      'ar': 'ادعو أصدقاء',
-      'fr': '',
+    '6y52vw64': {
+      'en': 'Log Out',
+      'ar': 'تسجيل خروج',
+      'fr': 'Se déconnecter',
     },
     'te09zu8g': {
       'en': 'Profile',
       'ar': 'حساب تعريفي',
-      'fr': '',
+      'fr': 'Profil',
     },
     'a24h04g2': {
       'en': 'Profile',
       'ar': 'حساب تعريفي',
-      'fr': '',
+      'fr': 'Profil',
     },
   },
   // store
@@ -783,216 +692,75 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     '1q595n6q': {
       'en': 'Medrasti',
       'ar': 'ميدراستي',
-      'fr': '',
+      'fr': 'Médrasti',
     },
     'iucoxgxv': {
       'en': 'Study Packages',
       'ar': 'الحزم الدراسية',
-      'fr': '',
+      'fr': 'Forfaits d\'études',
     },
     'ggjoyj0i': {
       'en': 'Introduction to Programming',
       'ar': 'مقدمة في البرمجة',
-      'fr': '',
+      'fr': 'Introduction à la programmation',
     },
     '0bqtdjql': {
       'en': 'Docs & Videos',
       'ar': 'المستندات ومقاطع الفيديو',
-      'fr': '',
+      'fr': 'Documents et vidéos',
     },
     'b92zhhlh': {
       'en': 'Explore Courses',
       'ar': 'استكشاف الدورات',
-      'fr': '',
+      'fr': 'Explorer les cours',
     },
     'sfinpbu2': {
       'en': 'Students also purchased',
       'ar': 'اشترى الطلاب أيضا',
-      'fr': '',
+      'fr': 'Les étudiants ont également acheté',
     },
     'kvqtti16': {
       'en': 'Web Development',
       'ar': 'تطوير الشبكة',
-      'fr': '',
+      'fr': 'Développement web',
     },
     '895ss9sm': {
       'en': 'Explore',
       'ar': 'يستكشف',
-      'fr': '',
+      'fr': 'Explorer',
     },
     'mvl0bsza': {
       'en': 'View plans',
       'ar': 'عرض الخطط',
-      'fr': '',
+      'fr': 'Voir les forfaits',
     },
     'u1ig6wrt': {
       'en': 'Web Development',
       'ar': 'تطوير الشبكة',
-      'fr': '',
+      'fr': 'Développement web',
     },
     'insiegdv': {
       'en': 'Explore',
       'ar': 'يستكشف',
-      'fr': '',
+      'fr': 'Explorer',
     },
     '8jrhbbpq': {
       'en': 'View plans',
       'ar': 'عرض الخطط',
-      'fr': '',
+      'fr': 'Voir les forfaits',
     },
     'quoo576n': {
       'en':
           'Medrasti  is a worldwide educational mobile application designed to give learners the best.',
-      'ar': '',
-      'fr': '',
+      'ar':
+          'Medrasti هو تطبيق تعليمي عالمي للهاتف المحمول مصمم لمنح المتعلمين الأفضل.',
+      'fr':
+          'Medrasti est une application mobile éducative mondiale conçue pour offrir le meilleur aux apprenants.',
     },
     '7w3zlczq': {
       'en': 'store',
       'ar': 'محل',
-      'fr': '',
-    },
-  },
-  // Courses_list
-  {
-    'vntfkxjo': {
-      'en': 'Courses',
-      'ar': 'الدورات',
-      'fr': '',
-    },
-    'ma15qo9a': {
-      'en': 'Our courses are listed below',
-      'ar': 'دوراتنا مدرجة أدناه',
-      'fr': '',
-    },
-    '2bwcex7k': {
-      'en': 'Web Development',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    '49yu7sjz': {
-      'en': 'Explore',
-      'ar': 'يستكشف',
-      'fr': '',
-    },
-    'gwmld01o': {
-      'en': 'View plans',
-      'ar': 'عرض الخطط',
-      'fr': '',
-    },
-    'abdfegyn': {
-      'en': 'Buy now',
-      'ar': 'اشتري الآن',
-      'fr': '',
-    },
-    'saipwp9a': {
-      'en': '\$40',
-      'ar': '40 دولارًا',
-      'fr': '',
-    },
-    'js6h5xlj': {
-      'en': 'Web Development',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    'haunh5n3': {
-      'en': 'Explore',
-      'ar': 'يستكشف',
-      'fr': '',
-    },
-    'cuyvqzvz': {
-      'en': 'View plans',
-      'ar': 'عرض الخطط',
-      'fr': '',
-    },
-    'zk5baiow': {
-      'en': 'Buy now',
-      'ar': 'اشتري الآن',
-      'fr': '',
-    },
-    '6m9g2i9k': {
-      'en': '\$40',
-      'ar': '40 دولارًا',
-      'fr': '',
-    },
-    'kzelrp36': {
-      'en': 'Web Development',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    'ee1ml12g': {
-      'en': 'Explore',
-      'ar': 'يستكشف',
-      'fr': '',
-    },
-    '1f4g4xgy': {
-      'en': 'View plans',
-      'ar': 'عرض الخطط',
-      'fr': '',
-    },
-    'uyb5jo9t': {
-      'en': 'Buy now',
-      'ar': 'اشتري الآن',
-      'fr': '',
-    },
-    'vtd4v12s': {
-      'en': '\$40',
-      'ar': '40 دولارًا',
-      'fr': '',
-    },
-    'zhnvnw4n': {
-      'en': 'Web Development',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    '9f8ebjtj': {
-      'en': 'Explore',
-      'ar': 'يستكشف',
-      'fr': '',
-    },
-    '4s6cmyz1': {
-      'en': 'View plans',
-      'ar': 'عرض الخطط',
-      'fr': '',
-    },
-    '429rqrmz': {
-      'en': 'Buy now',
-      'ar': 'اشتري الآن',
-      'fr': '',
-    },
-    'wdby731h': {
-      'en': '\$40',
-      'ar': '40 دولارًا',
-      'fr': '',
-    },
-    '1eoctsgm': {
-      'en': 'Web Development',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    'e4c07hod': {
-      'en': 'Explore',
-      'ar': 'يستكشف',
-      'fr': '',
-    },
-    'yfq2i8tu': {
-      'en': 'View plans',
-      'ar': 'عرض الخطط',
-      'fr': '',
-    },
-    'v968a95k': {
-      'en': 'Buy now',
-      'ar': 'اشتري الآن',
-      'fr': '',
-    },
-    '7w32a3ob': {
-      'en': '\$40',
-      'ar': '40 دولارًا',
-      'fr': '',
-    },
-    'jxpiofru': {
-      'en': 'Home',
-      'ar': 'بيت',
-      'fr': '',
+      'fr': 'magasin',
     },
   },
   // discount
@@ -1000,79 +768,80 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'o6bkn19p': {
       'en': 'Discover Our Courses',
       'ar': 'اكتشف دوراتنا',
-      'fr': '',
+      'fr': 'Découvrez nos cours',
     },
     'wuae4phy': {
       'en':
           'Learn new skills with our expert-taught courses and save with these exclusive offers!',
       'ar':
           'تعلم مهارات جديدة من خلال دوراتنا التي يدرسها الخبراء ووفّر مع هذه العروض الحصرية!',
-      'fr': '',
+      'fr':
+          'Apprenez de nouvelles compétences grâce à nos cours dispensés par des experts et économisez grâce à ces offres exclusives !',
     },
     'mjara1rj': {
       'en': 'Boost your brand\'s online presence',
       'ar': 'تعزيز تواجد علامتك التجارية على الإنترنت',
-      'fr': '',
+      'fr': 'Boostez la présence en ligne de votre marque',
     },
     'bjt627b1': {
       'en': 'Digital Marketing',
       'ar': 'التسويق الرقمي',
-      'fr': '',
+      'fr': 'Le marketing numérique',
     },
     'c0hfc3oz': {
       'en': '20% OFF',
       'ar': '20٪ خصم',
-      'fr': '',
+      'fr': 'RÉDUCTION DE 20',
     },
     'xfkjz16q': {
       'en': 'UX/UI Design',
       'ar': 'تصميم تجربة المستخدم/واجهة المستخدم',
-      'fr': '',
+      'fr': 'Conception UX/UI',
     },
     'vug3536b': {
       'en': 'Create stunning user interfaces',
       'ar': 'إنشاء واجهات مستخدم مذهلة',
-      'fr': '',
+      'fr': 'Créez des interfaces utilisateur époustouflantes',
     },
     'gif5h2vr': {
       'en': '30% OFF',
       'ar': 'تخفيض 30',
-      'fr': '',
+      'fr': '30% DE RÉDUCTION',
     },
     'iy8tzu3f': {
       'en': 'Photography',
       'ar': 'التصوير',
-      'fr': '',
+      'fr': 'La photographie',
     },
     '0vzrs5b4': {
       'en': 'Capture the world around you',
-      'ar': 'التقط العالم من حولك',
-      'fr': '',
+      'ar': 'التقاط العالم من حولك',
+      'fr': 'Capturez le monde qui vous entoure',
     },
     'c3z5yjic': {
       'en': '15% OFF',
       'ar': 'خصم 15%',
-      'fr': '',
+      'fr': '15% DE RÉDUCTION',
     },
     't1hbags7': {
       'en': 'Programming Basics',
       'ar': 'أساسيات البرمجة',
-      'fr': '',
+      'fr': 'Bases de la programmation',
     },
     'tdw4uzmm': {
       'en': 'Start coding with essential skills',
       'ar': 'ابدأ البرمجة باستخدام المهارات الأساسية',
-      'fr': '',
+      'fr': 'Commencez à coder avec des compétences essentielles',
     },
     'i8h88b2k': {
       'en': '10% OFF',
       'ar': 'خصم 10',
-      'fr': '',
+      'fr': '10% DE RÉDUCTION',
     },
     'tiq6dae6': {
       'en': 'Courses Offers',
       'ar': 'عروض الدورات',
-      'fr': '',
+      'fr': 'Offres de cours',
     },
   },
   // Edit_profile
@@ -1080,317 +849,317 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     '8uj1825k': {
       'en': 'Full Name',
       'ar': 'الاسم الكامل',
-      'fr': '',
+      'fr': 'Nom et prénom',
     },
     'm1cnsq7a': {
       'en': 'Option 1',
       'ar': 'الخيار 1',
-      'fr': '',
+      'fr': 'Option 1',
     },
     'nahxj8iq': {
       'en': 'Female',
       'ar': 'أنثى',
-      'fr': '',
+      'fr': 'Femelle',
     },
     'rv7j7yba': {
       'en': 'Male',
       'ar': 'ذكر',
-      'fr': '',
+      'fr': 'Mâle',
     },
     '4g1vboab': {
       'en': 'Gender',
       'ar': 'جنس',
-      'fr': '',
+      'fr': 'Genre',
     },
     'gs5rl0gx': {
       'en': 'Search for an item...',
       'ar': 'البحث عن عنصر...',
-      'fr': '',
+      'fr': 'Rechercher un article...',
     },
     'nrvgwxqn': {
       'en': 'Phone',
       'ar': 'هاتف',
-      'fr': '',
+      'fr': 'Téléphone',
     },
     'adu3tp55': {
       'en': 'Student',
       'ar': 'طالب',
-      'fr': '',
+      'fr': 'Étudiant',
     },
     'sm8hf5uf': {
       'en': 'State',
       'ar': 'ولاية',
-      'fr': '',
+      'fr': 'État',
     },
     'amwa2cnn': {
       'en': 'State',
       'ar': 'ولاية',
-      'fr': '',
+      'fr': 'État',
     },
     'zkridiy7': {
       'en': 'Alabama',
       'ar': 'ألاباما',
-      'fr': '',
+      'fr': 'Alabama',
     },
     'u5cq2co2': {
       'en': 'Alaska',
       'ar': 'ألاسكا',
-      'fr': '',
+      'fr': 'Alaska',
     },
     'itoj64hz': {
       'en': 'Arizona',
       'ar': 'أريزونا',
-      'fr': '',
+      'fr': 'Arizona',
     },
     'gah8x266': {
       'en': 'Arkansas',
       'ar': 'أركنساس',
-      'fr': '',
+      'fr': 'Arkansas',
     },
     'ya3rt8h7': {
       'en': 'California',
       'ar': 'كاليفورنيا',
-      'fr': '',
+      'fr': 'Californie',
     },
     'eaibzwz0': {
       'en': 'Colorado',
       'ar': 'كولورادو',
-      'fr': '',
+      'fr': 'Colorado',
     },
     're2b7qkk': {
       'en': 'Connecticut',
       'ar': 'كونيتيكت',
-      'fr': '',
+      'fr': 'Connecticut',
     },
     'jiqr2haj': {
       'en': 'Delaware',
       'ar': 'ديلاوير',
-      'fr': '',
+      'fr': 'Delaware',
     },
     'sqxrzxqn': {
       'en': 'Florida',
       'ar': 'فلوريدا',
-      'fr': '',
+      'fr': 'Floride',
     },
     'ef71hniw': {
       'en': 'Georgia',
       'ar': 'جورجيا',
-      'fr': '',
+      'fr': 'Géorgie',
     },
     'zgxmrbv6': {
       'en': 'Hawaii',
       'ar': 'هاواي',
-      'fr': '',
+      'fr': 'Hawaii',
     },
     'hr268k1j': {
       'en': 'Idaho',
       'ar': 'ايداهو',
-      'fr': '',
+      'fr': 'Idaho',
     },
     '2fx6vxnj': {
       'en': 'Illinoi',
       'ar': 'إلينوي',
-      'fr': '',
+      'fr': 'Illinois',
     },
     'kdv17xjt': {
       'en': 'Indiana',
       'ar': 'إنديانا',
-      'fr': '',
+      'fr': 'Indiana',
     },
     'ym5ka2ys': {
       'en': 'Iowa',
       'ar': 'ايوا',
-      'fr': '',
+      'fr': 'Iowa',
     },
     'q2pc0fp0': {
       'en': 'Kansas',
       'ar': 'كانساس',
-      'fr': '',
+      'fr': 'Kansas',
     },
     'rum3olba': {
       'en': 'Kentucky',
       'ar': 'كنتاكي',
-      'fr': '',
+      'fr': 'Kentucky',
     },
     'bpo61il6': {
       'en': 'Louisiana',
       'ar': 'لويزيانا',
-      'fr': '',
+      'fr': 'Louisiane',
     },
     'hmhdly9c': {
       'en': 'Maine',
       'ar': 'مين',
-      'fr': '',
+      'fr': 'Maine',
     },
     'cajmbcpq': {
       'en': 'Maryland',
       'ar': 'ميريلاند',
-      'fr': '',
+      'fr': 'Maryland',
     },
     'gq6ml3wi': {
       'en': 'Massachusetts',
       'ar': 'ماساتشوستس',
-      'fr': '',
+      'fr': 'Massachusetts',
     },
     '30dvk8cl': {
       'en': 'Michigan',
       'ar': 'ميشيغان',
-      'fr': '',
+      'fr': 'Michigan',
     },
     '2hg0nyw7': {
       'en': 'Minnesota',
       'ar': 'مينيسوتا',
-      'fr': '',
+      'fr': 'Minnesota',
     },
     'fq8jg0c4': {
       'en': 'Mississippi',
       'ar': 'ميسيسيبي',
-      'fr': '',
+      'fr': 'Mississippi',
     },
     '6nq8aqi0': {
       'en': 'Missouri',
       'ar': 'ميسوري',
-      'fr': '',
+      'fr': 'Missouri',
     },
     'ldlvw67c': {
       'en': 'Monta',
       'ar': 'مونتا',
-      'fr': '',
+      'fr': 'Monta',
     },
     'y09wrgsj': {
       'en': 'Nebraska',
       'ar': 'نبراسكا',
-      'fr': '',
+      'fr': 'Nebraska',
     },
     '6f30tgtj': {
       'en': 'Nevada',
       'ar': 'نيفادا',
-      'fr': '',
+      'fr': 'Nevada',
     },
     'tpf0u1uu': {
       'en': 'New Hampshire',
       'ar': 'نيو هامبشاير',
-      'fr': '',
+      'fr': 'New Hampshire',
     },
     'nwzogtjo': {
       'en': 'New Jersey',
       'ar': 'نيو جيرسي',
-      'fr': '',
+      'fr': 'New Jersey',
     },
     'vrttoo7j': {
       'en': 'New Mexico',
       'ar': 'المكسيك جديدة',
-      'fr': '',
+      'fr': 'Nouveau Mexique',
     },
     'yw9rqoeg': {
       'en': 'New York',
       'ar': 'نيويورك',
-      'fr': '',
+      'fr': 'New York',
     },
     's8uz06g2': {
       'en': 'North Carolina',
       'ar': 'شمال كارولينا',
-      'fr': '',
+      'fr': 'Caroline du Nord',
     },
     '571orbgz': {
       'en': 'North Dak',
       'ar': 'شمال داك',
-      'fr': '',
+      'fr': 'Dak Nord',
     },
     'k05c8z9n': {
       'en': 'Ohio',
       'ar': 'أوهايو',
-      'fr': '',
+      'fr': 'Ohio',
     },
     'fpnfkwr4': {
       'en': 'Oklahoma',
       'ar': 'أوكلاهوما',
-      'fr': '',
+      'fr': 'Oklahoma',
     },
     '9jwn3nun': {
       'en': 'Oregon',
       'ar': 'ولاية أوريغون',
-      'fr': '',
+      'fr': 'Oregon',
     },
     'qn6i57ru': {
       'en': 'Pennsylvani',
       'ar': 'بنسلفانيا',
-      'fr': '',
+      'fr': 'Pennsylvanie',
     },
     'crg9qkxe': {
       'en': 'Rhode Island',
       'ar': 'جزيرة رود',
-      'fr': '',
+      'fr': 'Rhode Island',
     },
     'sy8d9hk8': {
       'en': 'South Caroli',
       'ar': 'جنوب كارولي',
-      'fr': '',
+      'fr': 'Caroline du Sud',
     },
     'br11guam': {
       'en': 'South Dakota',
       'ar': 'جنوب داكوتا',
-      'fr': '',
+      'fr': 'Dakota du Sud',
     },
     '303y0b46': {
       'en': 'Tennessee',
       'ar': 'تينيسي',
-      'fr': '',
+      'fr': 'Tennessee',
     },
     'r03tujr2': {
       'en': 'Texas',
       'ar': 'تكساس',
-      'fr': '',
+      'fr': 'Texas',
     },
     'fsazf1qh': {
       'en': 'Utah',
       'ar': 'يوتا',
-      'fr': '',
+      'fr': 'Utah',
     },
     'lazggv37': {
       'en': 'Vermont',
       'ar': 'فيرمونت',
-      'fr': '',
+      'fr': 'Vermont',
     },
     'k6h1ze3g': {
       'en': 'Virginia',
       'ar': 'فرجينيا',
-      'fr': '',
+      'fr': 'Virginie',
     },
     'kb37kpwu': {
       'en': 'Washingto',
       'ar': 'واشنطن',
-      'fr': '',
+      'fr': 'Lavage à',
     },
     'cq83rdjy': {
       'en': 'West Virginia',
       'ar': 'فرجينيا الغربية',
-      'fr': '',
+      'fr': 'Virginie occidentale',
     },
     'nvxa4ffd': {
       'en': 'Wisconsin',
       'ar': 'ويسكونسن',
-      'fr': '',
+      'fr': 'Wisconsin',
     },
     'ela0b4vt': {
       'en': 'Wyoming',
       'ar': 'وايومنغ',
-      'fr': '',
+      'fr': 'Wyoming',
     },
     'be35pipc': {
       'en': 'Select State',
       'ar': 'اختر ولايه',
-      'fr': '',
+      'fr': 'Sélectionnez l\'état',
     },
     '9thjhy5t': {
       'en': 'Save Changes',
       'ar': 'حفظ التغييرات',
-      'fr': '',
+      'fr': 'Sauvegarder les modifications',
     },
     'vuvlh8t1': {
       'en': 'Edit Profile',
       'ar': 'تعديل الملف الشخصي',
-      'fr': '',
+      'fr': 'Editer le profil',
     },
   },
   // Success03
@@ -1398,37 +1167,37 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'h6s9viaq': {
       'en': 'Congrats!',
       'ar': 'تهاني!',
-      'fr': '',
+      'fr': 'Bravo!',
     },
     'aesdzucr': {
       'en': 'Quiz Results Submitted',
       'ar': 'تم إرسال نتائج الاختبار',
-      'fr': '',
+      'fr': 'Résultats du quiz soumis',
     },
     '8ykjt6jv': {
       'en': 'You completed a quiz from:',
       'ar': 'لقد أكملت اختبارًا من:',
-      'fr': '',
+      'fr': 'Vous avez répondu à un quiz de :',
     },
     'mgb3er8t': {
       'en': 'Abigail Rogers',
       'ar': 'أبيجيل روجرز',
-      'fr': '',
+      'fr': 'Abigail Rogers',
     },
     '6vsftui4': {
       'en': 'abigail.rogers@domain.com',
       'ar': 'abigail.rogers@domain.com',
-      'fr': '',
+      'fr': 'abigail.rogers@domain.com',
     },
     '4i2643dn': {
       'en': 'Go Home',
       'ar': 'اذهب للمنزل',
-      'fr': '',
+      'fr': 'Rentrer chez soi',
     },
     '4pru7uzg': {
       'en': 'Home',
       'ar': 'بيت',
-      'fr': '',
+      'fr': 'Maison',
     },
   },
   // SupportForm
@@ -1436,62 +1205,62 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     '5xigbmbv': {
       'en': 'Submit Ticket',
       'ar': 'قدم التذكرة',
-      'fr': '',
+      'fr': 'Envoyer le ticket',
     },
     '4h1qmrhy': {
       'en': 'Welcome to support',
       'ar': 'مرحبا بكم في الدعم',
-      'fr': '',
+      'fr': 'Bienvenue au support',
     },
     'y6zp1h1u': {
       'en': 'Submit a Ticket',
       'ar': 'تسجيل التذكرة',
-      'fr': '',
+      'fr': 'Soumettre un ticket',
     },
     'mc86u215': {
       'en': 'Call Us',
       'ar': 'اتصل بنا',
-      'fr': '',
+      'fr': 'Appelez-nous',
     },
     'i6zteyzo': {
       'en': 'Email Us',
       'ar': 'ارسل لنا عبر البريد الإلكتروني',
-      'fr': '',
+      'fr': 'Envoyez-nous un email',
     },
     '83yci8a3': {
       'en': 'Search FAQs',
       'ar': 'البحث في الأسئلة الشائعة',
-      'fr': '',
+      'fr': 'Rechercher dans la FAQ',
     },
     '36yr24fo': {
       'en': 'Course Name',
       'ar': 'اسم الدورة التدريبية',
-      'fr': '',
+      'fr': 'Nom du cours',
     },
     'z5yp92j4': {
       'en': 'Issue',
       'ar': 'مشكلة',
-      'fr': '',
+      'fr': 'Problème',
     },
     'c850tpo5': {
       'en': 'Short Description of what is going on...',
       'ar': 'وصف مختصر لما يحدث...',
-      'fr': '',
+      'fr': 'Brève description de ce qui se passe...',
     },
     '9fo10erp': {
       'en': 'Upload Screenshot',
       'ar': 'تحميل لقطة الشاشة',
-      'fr': '',
+      'fr': 'Télécharger une capture d\'écran',
     },
     'q01q69z1': {
       'en': 'Submit Ticket',
       'ar': 'قدم التذكرة',
-      'fr': '',
+      'fr': 'Envoyer le ticket',
     },
     'kd26cmp8': {
       'en': 'Home',
       'ar': 'بيت',
-      'fr': '',
+      'fr': 'Maison',
     },
   },
   // Payment
@@ -1499,128 +1268,122 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'jne5on17': {
       'en': 'PayPal',
       'ar': 'باي بال',
-      'fr': '',
+      'fr': 'Pay Pal',
     },
     'e1vkp99b': {
       'en': 'Google Pay',
       'ar': 'جوجل الدفع',
-      'fr': '',
+      'fr': 'Google Payer',
     },
     '1tkht5to': {
       'en': 'Apple Pay',
       'ar': 'أبل الدفع',
-      'fr': '',
+      'fr': 'Apple Payer',
     },
     '2omjjbnz': {
       'en': 'MasterCard',
       'ar': 'بطاقة ماستر بطاقة ائتمان',
-      'fr': '',
+      'fr': 'MasterCard',
     },
     'l872uron': {
       'en': 'Payment',
       'ar': 'قسط',
-      'fr': '',
+      'fr': 'Paiement',
     },
   },
   // Pricingplans
   {
-    '8fj7ne35': {
-      'en': 'Choose Your Plan',
-      'ar': 'اختر خطتك',
-      'fr': '',
-    },
-    'gs1a4u7d': {
-      'en': 'Select the best plan that fits your educational needs.',
-      'ar': 'اختر أفضل خطة تناسب احتياجاتك التعليمية.',
-      'fr': '',
+    't930wdqu': {
+      'en': 'Select the best plan that fits your educational needs',
+      'ar': 'اختر أفضل خطة تناسب احتياجاتك التعليمية',
+      'fr':
+          'Sélectionnez le meilleur plan qui correspond à vos besoins éducatifs',
     },
     '2y6tka30': {
       'en': 'Basic',
       'ar': 'أساسي',
-      'fr': '',
+      'fr': 'Basique',
     },
     'gafmhmpw': {
       'en': 'Access to free courses and limited resources.',
       'ar': 'الوصول إلى الدورات المجانية والموارد المحدودة.',
-      'fr': '',
+      'fr': 'Accès à des cours gratuits et à des ressources limitées.',
     },
     'jvdwq3pt': {
       'en': 'Free',
       'ar': 'حر',
-      'fr': '',
+      'fr': 'Gratuit',
     },
     'a8eyqylh': {
       'en': 'Select',
       'ar': 'يختار',
-      'fr': '',
+      'fr': 'Sélectionner',
     },
     'znwgwcpq': {
       'en': 'Standard',
       'ar': 'معيار',
-      'fr': '',
+      'fr': 'Standard',
     },
     '4a2ahqk4': {
       'en':
           'Includes everything in Basic, plus interactive quizzes and support.',
       'ar': 'يشمل كل شيء في Basic، بالإضافة إلى الاختبارات التفاعلية والدعم.',
-      'fr': '',
+      'fr':
+          'Comprend tout ce qui est en Basic, ainsi que des quiz interactifs et une assistance.',
     },
     'mlqkmyo4': {
       'en': '\$19.99/mo',
       'ar': '19.99 دولارًا شهريًا',
-      'fr': '',
+      'fr': '19,99 \$/mois',
     },
     'clinbtzc': {
       'en': 'Select',
       'ar': 'يختار',
-      'fr': '',
+      'fr': 'Sélectionner',
     },
     'u04x1i98': {
       'en': 'Premium',
       'ar': 'غالي',
-      'fr': '',
+      'fr': 'Prime',
     },
     'mvw9ju3e': {
       'en':
           'All Standard features, plus unlimited course access and certifications.',
       'ar':
           'جميع الميزات القياسية، بالإضافة إلى الوصول غير المحدود للدورة والشهادات.',
-      'fr': '',
+      'fr':
+          'Toutes les fonctionnalités Standard, ainsi qu\'un accès illimité aux cours et aux certifications.',
     },
     'ml8lvv8b': {
       'en': '\$49.99/mo',
       'ar': '49.99 دولارًا شهريًا',
-      'fr': '',
+      'fr': '49,99 \$/mois',
     },
     'xh351ytg': {
       'en': 'Select',
       'ar': 'يختار',
-      'fr': '',
+      'fr': 'Sélectionner',
     },
     'lmaesat0': {
       'en': 'Enterprise',
       'ar': 'مَشرُوع',
-      'fr': '',
+      'fr': 'Entreprise',
     },
     'k51ix2m1': {
       'en': 'Custom solutions for organizations and educational institutions.',
       'ar': 'حلول مخصصة للمؤسسات والمؤسسات التعليمية.',
-      'fr': '',
+      'fr':
+          'Solutions personnalisées pour les organisations et les établissements d\'enseignement.',
     },
     'rnsvdurk': {
       'en': 'Contact Us',
       'ar': 'اتصل بنا',
-      'fr': '',
+      'fr': 'Contactez-nous',
     },
     'g3mi8dxf': {
       'en': 'Select',
       'ar': 'يختار',
-      'fr': '',
-    },
-    'zr3jmjdd': {
-      'en': 'Pricing Plans',
-      'ar': 'خطط التسعير',
-      'fr': '',
+      'fr': 'Sélectionner',
     },
   },
   // notificatons
@@ -1628,112 +1391,112 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'jx7qgkqm': {
       'en': 'check.io',
       'ar': 'check.io',
-      'fr': '',
+      'fr': 'check.io',
     },
     '37imy73r': {
       'en': 'Platform Navigation',
       'ar': 'التنقل في المنصة',
-      'fr': '',
+      'fr': 'Navigation sur la plateforme',
     },
     '7r6s3v06': {
       'en': 'Dashboard',
       'ar': 'لوحة القيادة',
-      'fr': '',
+      'fr': 'Tableau de bord',
     },
     '3l60dhas': {
       'en': 'Chats',
       'ar': 'الدردشات',
-      'fr': '',
+      'fr': 'Discussions',
     },
     'v0o7v9p7': {
       'en': 'Projects',
       'ar': 'المشاريع',
-      'fr': '',
+      'fr': 'Projets',
     },
     'oxxefpff': {
       'en': 'Settings',
       'ar': 'إعدادات',
-      'fr': '',
+      'fr': 'Paramètres',
     },
     '3tpy4g2e': {
       'en': 'Notifications',
       'ar': 'إشعارات',
-      'fr': '',
+      'fr': 'Notifications',
     },
     'rju6rd9q': {
       'en': '12',
       'ar': '12',
-      'fr': '',
+      'fr': '12',
     },
     'onuw0zss': {
       'en': 'Billing',
       'ar': 'الفواتير',
-      'fr': '',
+      'fr': 'Facturation',
     },
     '4fhjmll1': {
       'en': 'Explore',
       'ar': 'يستكشف',
-      'fr': '',
+      'fr': 'Explorer',
     },
     'drfuqz9j': {
       'en': 'Light Mode',
       'ar': 'وضع الضوء',
-      'fr': '',
+      'fr': 'Mode lumière',
     },
     'zxbm1qw5': {
       'en': 'Dark Mode',
       'ar': 'الوضع المظلم',
-      'fr': '',
+      'fr': 'Mode sombre',
     },
     's303qg6j': {
       'en': 'Andrew D.',
       'ar': 'أندرو د.',
-      'fr': '',
+      'fr': 'Andrew D.',
     },
     'w0z75lx9': {
       'en': 'admin@gmail.com',
       'ar': 'admin@gmail.com',
-      'fr': '',
+      'fr': 'admin@gmail.com',
     },
     '5jfz6cdz': {
       'en': 'Notifications',
       'ar': 'إشعارات',
-      'fr': '',
+      'fr': 'Notifications',
     },
     '9p2rwwh4': {
       'en': 'Below is a list of recent activity',
       'ar': 'فيما يلي قائمة بالأنشطة الأخيرة',
-      'fr': '',
+      'fr': 'Vous trouverez ci-dessous une liste des activités récentes',
     },
     'eq0jdbba': {
       'en': 'New courses posted',
       'ar': 'تم نشر دورات جديدة',
-      'fr': '',
+      'fr': 'Nouveaux cours affichés',
     },
     'imqjz9e9': {
       'en': ' Begin Work',
       'ar': 'بدء العمل',
-      'fr': '',
+      'fr': 'Commencer le travail',
     },
     '08892nha': {
       'en': 'SOW Change Order',
       'ar': 'SOW تغيير الطلب',
-      'fr': '',
+      'fr': 'Ordre de modification du SOW',
     },
     'two6dh1m': {
       'en': 'FlutterFlow CRM App',
       'ar': 'تطبيق FlutterFlow لإدارة علاقات العملاء',
-      'fr': '',
+      'fr': 'Application FlutterFlow CRM',
     },
     '2aejcbkh': {
       'en': 'Jul 8, at 4:31pm',
       'ar': '8 يوليو، الساعة 4:31 مساءً',
-      'fr': '',
+      'fr': '8 juillet, à 16h31',
     },
     'obj8t8dt': {
       'en': 'New lesson Started ',
       'ar': 'بدأ الدرس الجديد',
-      'fr': '',
+      'fr': 'Nouvelle leçon commencée',
     },
     'j3rw3806': {
       'en': '',
@@ -1742,35 +1505,36 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'itk4gq9r': {
       'en': 'Medrasti Change Order',
-      'ar': 'SOW تغيير الطلب',
-      'fr': '',
+      'ar': 'ترتيب تغيير مدرستي',
+      'fr': 'Ordre de modification de Medrasti',
     },
     'f1u79kxx': {
       'en': 'Medrsati',
       'ar': 'مدرستي',
-      'fr': '',
+      'fr': 'Médrasti',
     },
     'rzltwudt': {
       'en':
           '\"Notifications and reminders informing users about upcoming classes and training schedules will be sent to them via email, SMS or notifications within the application.\"',
       'ar':
           '\"سيتم إرسال الإخطارات والتذكيرات لإعلام المستخدمين بالفصول القادمة وجداول التدريب عبر البريد الإلكتروني أو الرسائل النصية القصيرة أو الإشعارات داخل التطبيق.\"',
-      'fr': '',
+      'fr':
+          '\"Des notifications et rappels informant les utilisateurs des cours à venir et des plannings de formation leur seront envoyés par e-mail, SMS ou notifications au sein de l\'application.\"',
     },
     'q9iiag6e': {
       'en': 'Jul 8, at 4:30pm',
       'ar': '8 يوليو، الساعة 4:30 مساءً',
-      'fr': '',
+      'fr': '8 juillet, à 16h30',
     },
     'did1n11w': {
       'en': 'Randy Rudolph ',
       'ar': 'راندي رودولف',
-      'fr': '',
+      'fr': 'Randy Rudolph',
     },
     'l3xhny0b': {
       'en': 'uploaded a new course',
-      'ar': 'أرسل أمر تغيير SOW لـ',
-      'fr': '',
+      'ar': 'تم تحميل دورة جديدة',
+      'fr': 'a téléchargé un nouveau cours',
     },
     '0p28wqv8': {
       'en': '',
@@ -1779,847 +1543,842 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     't1kln36n': {
       'en': 'Medrasti Change Order',
-      'ar': 'SOW تغيير الطلب',
-      'fr': '',
+      'ar': 'ترتيب تغيير مدرستي',
+      'fr': 'Ordre de modification de Medrasti',
     },
     'v49ceo5v': {
       'en': 'Medrasti app update',
       'ar': 'تحديث تطبيق مدراستي',
-      'fr': '',
+      'fr': 'Mise à jour de l\'application Medrasti',
     },
     'pwrulb9u': {
       'en':
           '\"Please review the updates to this document and get back with me.\"',
       'ar': '\"يُرجى مراجعة التحديثات على هذه الوثيقة والتواصل معي مرة أخرى.\"',
-      'fr': '',
+      'fr':
+          '\"Veuillez consulter les mises à jour de ce document et revenez vers moi.\"',
     },
     'fi1n70n6': {
       'en': 'Jul 8, at 2:20pm',
       'ar': '8 يوليو، الساعة 2:20 مساءً',
-      'fr': '',
+      'fr': '8 juillet, à 14h20',
     },
     'xxzc8hl5': {
       'en': 'Home',
       'ar': 'بيت',
-      'fr': '',
+      'fr': 'Maison',
     },
   },
   // Orders
   {
     'koxeohfz': {
       'en': 'Recent Orders',
-      'ar': '',
-      'fr': '',
+      'ar': 'الطلبيات الأخيرة',
+      'fr': 'Dernières commandes',
     },
     'vpmwcf2c': {
       'en': 'Below are your most recent orders',
-      'ar': '',
-      'fr': '',
+      'ar': 'فيما يلي أحدث طلباتك',
+      'fr': 'Ci-dessous vos dernières commandes',
     },
     '7mj2lxi2': {
       'en': 'Order #: ',
-      'ar': '',
-      'fr': '',
+      'ar': 'طلب #:',
+      'fr': 'Commande #:',
     },
     'oiktjetg': {
       'en': '429242424',
-      'ar': '',
-      'fr': '',
+      'ar': '429242424',
+      'fr': '429242424',
     },
     '5tabzcd3': {
       'en': 'Mon. July 3rd',
-      'ar': '',
-      'fr': '',
+      'ar': 'الاثنين. 3 يوليو',
+      'fr': 'Lun. 3 juillet',
     },
     'yzub4w2h': {
       'en': 'New course',
-      'ar': '',
-      'fr': '',
+      'ar': 'دورة جديدة',
+      'fr': 'Nouveau cours',
     },
     '6649oxye': {
       'en': '\$15.50',
-      'ar': '',
-      'fr': '',
+      'ar': '15.50 دولارًا',
+      'fr': '15,50 \$',
     },
     'fobppbcu': {
       'en': 'Shipped',
-      'ar': '',
-      'fr': '',
+      'ar': 'شحنها',
+      'fr': 'Expédié',
     },
     'a2346fl6': {
       'en': 'Order #: ',
-      'ar': '',
-      'fr': '',
+      'ar': 'طلب #:',
+      'fr': 'Commande #:',
     },
     'jovkymci': {
       'en': '429242424',
-      'ar': '',
-      'fr': '',
+      'ar': '429242424',
+      'fr': '429242424',
     },
     '5ypo6kpm': {
       'en': 'Mon. July 3rd',
-      'ar': '',
-      'fr': '',
+      'ar': 'الاثنين. 3 يوليو',
+      'fr': 'Lun. 3 juillet',
     },
     'cxyanufg': {
       'en': 'New course',
-      'ar': '',
-      'fr': '',
+      'ar': 'دورة جديدة',
+      'fr': 'Nouveau cours',
     },
     'cenwbzhp': {
       'en': '\$41.50',
-      'ar': '',
-      'fr': '',
+      'ar': '41.50 دولارًا',
+      'fr': '41,50 \$',
     },
     'g7mvt6yq': {
       'en': 'Shipped',
-      'ar': '',
-      'fr': '',
+      'ar': 'شحنها',
+      'fr': 'Expédié',
     },
     'dunmwcpo': {
       'en': 'Order #: ',
-      'ar': '',
-      'fr': '',
+      'ar': 'طلب #:',
+      'fr': 'Commande #:',
     },
     'c2qn2tze': {
       'en': '429242424',
-      'ar': '',
-      'fr': '',
+      'ar': '429242424',
+      'fr': '429242424',
     },
     'nbhjczk3': {
       'en': 'Mon. July 3rd',
-      'ar': '',
-      'fr': '',
+      'ar': 'الاثنين. 3 يوليو',
+      'fr': 'Lun. 3 juillet',
     },
     'fyo1nvsz': {
       'en': 'New course',
-      'ar': '',
-      'fr': '',
+      'ar': 'دورة جديدة',
+      'fr': 'Nouveau cours',
     },
     'q6440swl': {
       'en': '\$10.50',
-      'ar': '',
-      'fr': '',
+      'ar': '10.50 دولار',
+      'fr': '10,50 \$',
     },
     'eru9mo3c': {
       'en': 'Accepted',
-      'ar': '',
-      'fr': '',
+      'ar': 'قبلت',
+      'fr': 'Accepté',
     },
     '4iisubzh': {
       'en': 'Order #: ',
-      'ar': '',
-      'fr': '',
+      'ar': 'طلب #:',
+      'fr': 'Commande #:',
     },
     '02ot3roe': {
       'en': '429242424',
-      'ar': '',
-      'fr': '',
+      'ar': '429242424',
+      'fr': '429242424',
     },
     'l7l46upa': {
       'en': 'Mon. July 3rd',
-      'ar': '',
-      'fr': '',
+      'ar': 'الاثنين. 3 يوليو',
+      'fr': 'Lun. 3 juillet',
     },
     'gjezldpg': {
       'en': 'New course',
-      'ar': '',
-      'fr': '',
+      'ar': 'دورة جديدة',
+      'fr': 'Nouveau cours',
     },
     'iak33evd': {
       'en': '\$1.50',
-      'ar': '',
-      'fr': '',
+      'ar': '1.50 دولار',
+      'fr': '1,50 \$',
     },
     'zcgz6g4o': {
       'en': 'Accepted',
-      'ar': '',
-      'fr': '',
+      'ar': 'قبلت',
+      'fr': 'Accepté',
     },
     'wk5aq1wz': {
       'en': 'Home',
-      'ar': '',
-      'fr': '',
+      'ar': 'بيت',
+      'fr': 'Maison',
     },
   },
   // more
   {
     'y12dhsid': {
       'en': 'Explore additional features and settings',
-      'ar': '',
-      'fr': '',
+      'ar': 'اكتشف الميزات والإعدادات الإضافية',
+      'fr': 'Explorez des fonctionnalités et des paramètres supplémentaires',
     },
     'yp62g201': {
       'en': 'Web Development',
       'ar': 'تطوير الشبكة',
-      'fr': '',
+      'fr': 'Développement web',
     },
     '4d1xsr7c': {
       'en': 'Explore',
       'ar': 'يستكشف',
-      'fr': '',
+      'fr': 'Explorer',
     },
     'ae9ir8mn': {
       'en': 'View plans',
       'ar': 'عرض الخطط',
-      'fr': '',
+      'fr': 'Voir les forfaits',
     },
     'q68kjg2w': {
       'en': 'Buy now',
       'ar': 'اشتري الآن',
-      'fr': '',
+      'fr': 'Acheter maintenant',
     },
     'kc7myln3': {
       'en': '\$40',
       'ar': '40 دولارًا',
-      'fr': '',
+      'fr': '40 \$',
     },
     'se4y1kov': {
       'en': 'Profile',
-      'ar': '',
-      'fr': '',
+      'ar': 'حساب تعريفي',
+      'fr': 'Profil',
     },
     'ylprf9xp': {
       'en': 'Courses',
-      'ar': '',
-      'fr': '',
+      'ar': 'الدورات',
+      'fr': 'Cours',
     },
     'h7bacjq7': {
       'en': 'Discounts',
-      'ar': '',
-      'fr': '',
+      'ar': 'خصومات',
+      'fr': 'Réductions',
     },
     'rc6908z5': {
       'en': 'Payment',
-      'ar': '',
-      'fr': '',
+      'ar': 'قسط',
+      'fr': 'Paiement',
     },
     '0hej4zzk': {
       'en': 'Discount offers',
-      'ar': 'مقدمة في البرمجة',
-      'fr': '',
+      'ar': 'عروض الخصم',
+      'fr': 'Offres de réduction',
     },
     '0043z7fc': {
       'en': 'Docs & Videos',
       'ar': 'المستندات ومقاطع الفيديو',
-      'fr': '',
+      'fr': 'Documents et vidéos',
     },
     'ocww4ton': {
       'en': 'Explore Courses',
       'ar': 'استكشاف الدورات',
-      'fr': '',
+      'fr': 'Explorer les cours',
     },
     '24qz21nj': {
       'en': 'Support',
-      'ar': '',
-      'fr': '',
+      'ar': 'يدعم',
+      'fr': 'Soutien',
     },
     'ca0wg4wh': {
       'en': 'Settings',
-      'ar': '',
-      'fr': '',
+      'ar': 'إعدادات',
+      'fr': 'Paramètres',
     },
     'zuewamg2': {
       'en': 'Log Out',
-      'ar': '',
-      'fr': '',
+      'ar': 'تسجيل خروج',
+      'fr': 'Se déconnecter',
     },
     'axaz121m': {
       'en': 'More',
-      'ar': '',
-      'fr': '',
+      'ar': 'أكثر',
+      'fr': 'Plus',
     },
   },
   // notifications_page
   {
     '4rc0v067': {
       'en': 'Manage your notification preferences',
-      'ar': '',
-      'fr': '',
+      'ar': 'إدارة تفضيلات الإخطار الخاصة بك',
+      'fr': 'Gérer vos préférences de notification',
     },
     'cvfn4j3s': {
       'en': 'General Notifications',
-      'ar': '',
-      'fr': '',
+      'ar': 'الإخطارات العامة',
+      'fr': 'Notifications générales',
     },
     '6vxovitb': {
       'en': 'Sounds',
-      'ar': '',
-      'fr': '',
+      'ar': 'اصوات',
+      'fr': 'Des sons',
     },
     '9n5v7pvg': {
       'en': 'Vibrate',
-      'ar': '',
-      'fr': '',
+      'ar': 'تذبذب',
+      'fr': 'Vibrer',
     },
     'ep5n23oa': {
       'en': 'Promo & Discounts',
-      'ar': '',
-      'fr': '',
+      'ar': 'الترويجي والخصومات',
+      'fr': 'Promotions et réductions',
     },
     'q177s232': {
       'en': 'Payment Notifications',
-      'ar': '',
-      'fr': '',
+      'ar': 'إشعارات الدفع',
+      'fr': 'Avis de paiement',
     },
     '9xur88hs': {
       'en': 'Cashback Notifications',
-      'ar': '',
-      'fr': '',
+      'ar': 'إشعارات استرداد النقود',
+      'fr': 'Notifications de remboursement',
     },
     'rspc03cm': {
       'en': 'App Updates',
-      'ar': '',
-      'fr': '',
+      'ar': 'تحديثات التطبيق',
+      'fr': 'Mises à jour de l\'application',
     },
     'm4rgew6t': {
       'en': 'News Service Available',
-      'ar': '',
-      'fr': '',
+      'ar': 'خدمة الأخبار متاحة',
+      'fr': 'Service de nouvelles disponible',
     },
     'r6s40c6j': {
       'en': 'News Tip Available',
-      'ar': '',
-      'fr': '',
+      'ar': 'نصيحة الأخبار متاحة',
+      'fr': 'Astuce d\'actualité disponible',
     },
     '3jzm96vm': {
       'en': 'Notifications',
-      'ar': '',
-      'fr': '',
+      'ar': 'إشعارات',
+      'fr': 'Notifications',
     },
   },
-  // Course01
+  // Coursepdf
   {
-    'ccatnrs6': {
-      'en': 'medrasti courses',
-      'ar': 'المستندات ومقاطع الفيديو',
-      'fr': '',
-    },
-    '677kjaul': {
-      'en': 'Fullstack Web Development',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    'wsik92kx': {
-      'en': '177,117 students learning this week',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    'dw4qb2l0': {
-      'en': '01.',
-      'ar': '',
-      'fr': '',
-    },
-    'gpafx0k6': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    '9x1t4xki': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    '90cuq5es': {
-      'en': '02.',
-      'ar': '',
-      'fr': '',
-    },
-    'irpm3xcs': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    'wpde92eh': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    '34voin7t': {
-      'en': '03.',
-      'ar': '',
-      'fr': '',
-    },
-    '92jqjj4c': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    '6qp8plts': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    'kizjtunt': {
-      'en': '04.',
-      'ar': '',
-      'fr': '',
-    },
-    '20uafc3s': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    '08gq8blr': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    'i2hckfm2': {
-      'en': 'About this Course',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    'f4raiy7x': {
-      'en': '283 Videos included',
-      'ar': '',
-      'fr': '',
-    },
-    'bcfc3ejw': {
-      'en': 'Detailed and comprehensive ',
-      'ar': '',
-      'fr': '',
-    },
-    'iznoxfps': {
-      'en': '1834 ratings',
-      'ar': '',
-      'fr': '',
-    },
-    '6tyiw7wj': {
-      'en': '838 students learning this week',
-      'ar': '',
-      'fr': '',
-    },
-    '3jbhjvkx': {
-      'en': 'View plans',
-      'ar': 'المستندات ومقاطع الفيديو',
-      'fr': '',
-    },
-    '6u7c2mrt': {
-      'en': 'Enroll Now',
-      'ar': 'استكشاف الدورات',
-      'fr': '',
-    },
-    'blfkvoh3': {
-      'en': 'More',
-      'ar': '',
-      'fr': '',
-    },
-  },
-  // Course0101
-  {
-    'rf4r2ypv': {
-      'en': 'Fullstack Web Development',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    'imh18fvv': {
-      'en': '01.',
-      'ar': '',
-      'fr': '',
-    },
-    'b4zjhrkx': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    '9o42tzbw': {
-      'en': '5 videos',
-      'ar': '',
-      'fr': '',
-    },
-    '81wdh2tf': {
-      'en': '02.',
-      'ar': '',
-      'fr': '',
-    },
-    '7ofi1jj3': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    'kdpmi5y6': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    '0un9zj5p': {
-      'en': '03.',
-      'ar': '',
-      'fr': '',
-    },
-    'itv71mid': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    '1onhei27': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    '1zb1g9ve': {
-      'en': '04.',
-      'ar': '',
-      'fr': '',
-    },
-    'ugix9mw4': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    '1pqiz8nt': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    'bbxnxrk1': {
-      'en': '05.',
-      'ar': '',
-      'fr': '',
-    },
-    'nphdxcx7': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    'z4p35cuf': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    'eii1hpit': {
-      'en': 'More',
-      'ar': '',
-      'fr': '',
-    },
-  },
-  // Course01011
-  {
-    'u0k54ivs': {
-      'en': 'Basics of Full stack development',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    'oyyeyeh7': {
-      'en': 'Basics of HTML-1',
-      'ar': '',
-      'fr': '',
-    },
-    's2s6qmbc': {
-      'en': 'video | 178 min',
-      'ar': '',
-      'fr': '',
-    },
-    'rhm8n6me': {
-      'en': 'Basics of HTML-2',
-      'ar': '',
-      'fr': '',
-    },
-    'jbhp5tdi': {
-      'en': 'video | 178 min',
-      'ar': '',
-      'fr': '',
-    },
-    '0ukj0xsq': {
-      'en': 'More',
-      'ar': '',
-      'fr': '',
-    },
-  },
-  // Course01011Video
-  {
-    'pagkvt6h': {
-      'en': 'Basics of HTML-1',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    'joxlvvj9': {
-      'en': 'Up next',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    'loj0thrz': {
-      'en': 'Basics of HTML-1',
-      'ar': '',
-      'fr': '',
-    },
-    '41up4ee0': {
-      'en': 'video | 178 min',
-      'ar': '',
-      'fr': '',
-    },
-    'u8kp1x2t': {
-      'en': 'Other Options',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    '4x2dl6xk': {
-      'en': 'Unlock all videos',
-      'ar': '',
-      'fr': '',
-    },
-    'buih6m45': {
-      'en': 'Share with a friend',
-      'ar': '',
-      'fr': '',
-    },
-    'ux6ww62k': {
-      'en': 'Save to my list',
-      'ar': '',
-      'fr': '',
-    },
-    'obj04wdq': {
-      'en': 'Save to my list',
-      'ar': '',
-      'fr': '',
-    },
-    'rd59bwsj': {
-      'en': 'Join medrasti premium',
-      'ar': '',
-      'fr': '',
-    },
-    'nhb5j07z': {
-      'en': 'View All',
-      'ar': 'عرض الكل',
-      'fr': '',
-    },
-    'gsamyddx': {
-      'en': 'More',
-      'ar': '',
-      'fr': '',
-    },
-  },
-  // Docs_and_videos
-  {
-    '3fct74zz': {
-      'en': 'Docs',
-      'ar': '',
-      'fr': '',
-    },
-    'd1okxjp8': {
-      'en': 'Select a course to view all vidoes',
-      'ar': '',
-      'fr': '',
-    },
-    'd9bw9z3f': {
-      'en': '01.',
-      'ar': '',
-      'fr': '',
-    },
-    '9tw5mzo6': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    '25zk7koy': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    'aio9itio': {
-      'en': '02.',
-      'ar': '',
-      'fr': '',
-    },
-    'gqfrkud9': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    'cijv9ktz': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    'kbphr3i8': {
-      'en': '03.',
-      'ar': '',
-      'fr': '',
-    },
-    '4bgr0jpz': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    'us8cz28w': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    '8sfixeoa': {
-      'en': '04.',
-      'ar': '',
-      'fr': '',
-    },
-    'fez3a8pr': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    '0y8omqmi': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    'kg7tcxaa': {
-      'en': 'Videos',
-      'ar': '',
-      'fr': '',
-    },
-    '6q5ms5x0': {
-      'en': '01.',
-      'ar': '',
-      'fr': '',
-    },
-    'qdpybybw': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    'a005z7ef': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    'x2ji3u6a': {
-      'en': '02.',
-      'ar': '',
-      'fr': '',
-    },
-    '8o0w33xj': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    '222owv9k': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    'h63f6zs2': {
-      'en': '03.',
-      'ar': '',
-      'fr': '',
-    },
-    'w0z3dekp': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    'c5lx1m18': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    'ay8g1jo7': {
-      'en': '04.',
-      'ar': '',
-      'fr': '',
-    },
-    '2mg2iyts': {
-      'en': 'Basics of Full stack development',
-      'ar': '',
-      'fr': '',
-    },
-    'libk6e94': {
-      'en': '5 subtopics',
-      'ar': '',
-      'fr': '',
-    },
-    'ylqrnqif': {
-      'en': 'About this Course',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    '7uwp5c49': {
-      'en': '283 Videos included',
-      'ar': '',
-      'fr': '',
-    },
-    'y5qffgh2': {
-      'en': 'Detailed and comprehensive ',
-      'ar': '',
-      'fr': '',
-    },
-    'jgzkk1rq': {
-      'en': '1834 ratings',
-      'ar': '',
-      'fr': '',
-    },
-    'uxr2idcu': {
-      'en': '838 students learning this week',
-      'ar': '',
-      'fr': '',
-    },
-    'gmz52cyk': {
-      'en': 'View plans',
-      'ar': 'المستندات ومقاطع الفيديو',
-      'fr': '',
-    },
-    'i8e26l45': {
-      'en': 'Enroll Now',
-      'ar': 'استكشاف الدورات',
-      'fr': '',
-    },
-    'f6g2lhw6': {
-      'en': 'Home',
-      'ar': '',
-      'fr': '',
-    },
-  },
-  // Course01011pdf
-  {
-    'neelc41g': {
-      'en': 'Basics of Full stack development',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    '2aatzz9c': {
-      'en': 'Basics of HTML-1 pdf',
-      'ar': '',
-      'fr': '',
-    },
-    'z2x093sg': {
-      'en': 'video | 178 min',
-      'ar': '',
-      'fr': '',
-    },
-    'cm43nuqa': {
-      'en': 'Basics of HTML-2 pdf',
-      'ar': '',
-      'fr': '',
-    },
-    'yum1pmte': {
-      'en': 'video | 178 min',
-      'ar': '',
-      'fr': '',
-    },
-    '43umzboh': {
-      'en': 'More',
-      'ar': '',
-      'fr': '',
-    },
-  },
-  // Course01011pdfread
-  {
-    'bez0unqm': {
-      'en': 'Basics of Full stack development',
-      'ar': 'تطوير الشبكة',
-      'fr': '',
-    },
-    'ttvoyayt': {
-      'en': 'Basics of HTML-1',
-      'ar': '',
-      'fr': '',
-    },
-    'ri3prktp': {
-      'en': 'video | 178 min',
+    'rbg1fexh': {
+      'en': 'Lesson',
       'ar': '',
       'fr': '',
     },
     's232j3n7': {
       'en': 'More',
+      'ar': 'أكثر',
+      'fr': 'Plus',
+    },
+  },
+  // Onboarding
+  {
+    'nhm0xrgm': {
+      'en': 'Prepare with courses  divided into sessions',
+      'ar': 'الاستعداد مع دورات مقسمة إلى جلسات',
+      'fr': 'Préparez-vous avec des cours divisés en séances',
+    },
+    '5dj7xvr6': {
+      'en':
+          'Learning sessions from the cleanest courses prepared by the best professors',
+      'ar': 'جلسات تعلم من أنقى الدورات التي أعدها أفضل الأساتذة',
+      'fr':
+          'Séances d\'apprentissage à partir des cours les plus propres préparés par les meilleurs professeurs',
+    },
+    '4w3vvlb1': {
+      'en': 'Video lectures and notes to clarify your cconcepts',
+      'ar': 'محاضرات فيديو وملاحظات لتوضيح مفاهيمك',
+      'fr': 'Conférences vidéo et notes pour clarifier vos concepts',
+    },
+    'tqa7obj2': {
+      'en': 'Learn from the best professors with great videos and useful notes',
+      'ar': 'تعلم من أفضل الأساتذة بمقاطع فيديو رائعة وملاحظات مفيدة',
+      'fr':
+          'Apprenez des meilleurs professeurs avec de superbes vidéos et des notes utiles',
+    },
+    'on3cuhxs': {
+      'en': 'Get solutions ',
+      'ar': 'احصل على الحلول',
+      'fr': 'Obtenez des solutions',
+    },
+    '0hsv4du3': {
+      'en': 'Join our community of many students and professors',
+      'ar': 'انضم إلى مجتمعنا الذي يضم العديد من الطلاب والأساتذة',
+      'fr': 'Rejoignez notre communauté de nombreux étudiants et professeurs',
+    },
+    '7bvdv96h': {
+      'en': 'All you need in one Place pass',
+      'ar': 'كل ما تحتاجه في مكان واحد',
+      'fr': 'Tout ce dont vous avez besoin dans un seul pass Place',
+    },
+    'h059a09a': {
+      'en':
+          'Pass your next exam with less effort, less time and less financial experience',
+      'ar': 'اجتاز امتحانك التالي بجهد أقل ووقت أقل وخبرة مالية أقل',
+      'fr':
+          'Réussissez votre prochain examen avec moins d\'efforts, moins de temps et moins d\'expérience financière',
+    },
+    'qrzswtcf': {
+      'en': 'Phone Sign-in',
+      'ar': 'تسجيل الدخول عبر الهاتف',
+      'fr': 'Connexion par téléphone',
+    },
+    '3crehn74': {
+      'en': 'Sign up with e-mail',
+      'ar': 'سجل عن طريق البريد الإلكتروني',
+      'fr': 'S\'enregistrer avec l\'adresse e-mail',
+    },
+    'qzhhtob1': {
+      'en': 'Sign up with Google',
+      'ar': 'قم بالتسجيل مع جوجل',
+      'fr': 'Inscrivez-vous avec Google',
+    },
+    'gx9qeeqa': {
+      'en': 'Already have an account?',
+      'ar': 'هل لديك حساب؟',
+      'fr': 'Vous avez déjà un compte?',
+    },
+    'kow8a71p': {
+      'en': ' Log In!',
+      'ar': 'تسجيل الدخول!',
+      'fr': 'Se connecter!',
+    },
+    'f6g2lhw6': {
+      'en': 'Home',
+      'ar': 'بيت',
+      'fr': 'Maison',
+    },
+  },
+  // dashboard
+  {
+    'g35061nm': {
+      'en': 'Below is a summary of your wallet points',
+      'ar': '',
+      'fr': '',
+    },
+    'd50p16fb': {
+      'en': 'Wallet Balance',
+      'ar': '',
+      'fr': '',
+    },
+    'y713mmiu': {
+      'en': 'Wallet History',
+      'ar': '',
+      'fr': '',
+    },
+    'ue6qx0ib': {
+      'en': 'Activity',
+      'ar': '',
+      'fr': '',
+    },
+    'esoie4we': {
+      'en': 'Below is an a summary of activity.',
+      'ar': '',
+      'fr': '',
+    },
+    'xp898yts': {
+      'en': 'Wallet',
+      'ar': '',
+      'fr': '',
+    },
+    'otx9rl3z': {
+      'en': '__',
+      'ar': '',
+      'fr': '',
+    },
+  },
+  // Individual_Courses
+  {
+    '4kbh0ob5': {
+      'en': 'medrasti courses',
+      'ar': '',
+      'fr': '',
+    },
+    'ey4nzwdy': {
+      'en': ' students learning this week',
+      'ar': '',
+      'fr': '',
+    },
+    'tejwyxyb': {
+      'en': '177,117 students learning this week',
+      'ar': '',
+      'fr': '',
+    },
+    '6rea24o7': {
+      'en': '5 subtopics',
+      'ar': '',
+      'fr': '',
+    },
+    'yj5t5l0f': {
+      'en': 'About this Course',
+      'ar': '',
+      'fr': '',
+    },
+    '7wj4dzu5': {
+      'en': '283 Videos included',
+      'ar': '',
+      'fr': '',
+    },
+    'nk2fh8ih': {
+      'en': 'Detailed and comprehensive ',
+      'ar': '',
+      'fr': '',
+    },
+    '255eskj2': {
+      'en': '1834 ratings',
+      'ar': '',
+      'fr': '',
+    },
+    'z7u6pjic': {
+      'en': '838 students learning this week',
+      'ar': '',
+      'fr': '',
+    },
+    'qtc0bjki': {
+      'en': 'View plans',
+      'ar': '',
+      'fr': '',
+    },
+    '6noiqfwc': {
+      'en': 'Enroll Now',
+      'ar': '',
+      'fr': '',
+    },
+    'i1t0s50i': {
+      'en': 'Course Contents',
+      'ar': '',
+      'fr': '',
+    },
+    'rgl5nx9x': {
+      'en': 'More',
+      'ar': '',
+      'fr': '',
+    },
+  },
+  // addCoursePage
+  {
+    'cwgnd0ow': {
+      'en': 'Submit Ticket',
+      'ar': '',
+      'fr': '',
+    },
+    'ankymrgx': {
+      'en': 'Welcome to support',
+      'ar': '',
+      'fr': '',
+    },
+    'b0fqfrs8': {
+      'en': 'Submit a Ticket',
+      'ar': '',
+      'fr': '',
+    },
+    '8a3hrv8k': {
+      'en': 'Call Us',
+      'ar': '',
+      'fr': '',
+    },
+    '0ckbsci4': {
+      'en': 'Email Us',
+      'ar': '',
+      'fr': '',
+    },
+    'bw9cfswg': {
+      'en': 'Search FAQs',
+      'ar': '',
+      'fr': '',
+    },
+    'b7laccw3': {
+      'en': 'Channel Name',
+      'ar': '',
+      'fr': '',
+    },
+    'oxvqkpj3': {
+      'en': 'Channel ID',
+      'ar': '',
+      'fr': '',
+    },
+    'vffoezi2': {
+      'en': 'Short Description of what is going on...',
+      'ar': '',
+      'fr': '',
+    },
+    '6iwgd454': {
+      'en': 'Upload Screenshot',
+      'ar': '',
+      'fr': '',
+    },
+    '1f84swam': {
+      'en': 'Submit Ticket',
+      'ar': '',
+      'fr': '',
+    },
+    '6pwp274f': {
+      'en': 'Home',
+      'ar': 'بيت',
+      'fr': 'Maison',
+    },
+  },
+  // All_courses
+  {
+    'evw2vcvl': {
+      'en': 'Search courses....',
+      'ar': '',
+      'fr': '',
+    },
+    'y0rd8sxh': {
+      'en': 'All Courses',
+      'ar': '',
+      'fr': '',
+    },
+    'k5gqcgee': {
+      'en': 'Courses',
+      'ar': '',
+      'fr': '',
+    },
+    'cz1qzzyu': {
+      'en': 'Home',
+      'ar': 'بيت',
+      'fr': 'Maison',
+    },
+  },
+  // fullCourseDetails
+  {
+    'k586yrq8': {
+      'en': 'Last Updated: ',
+      'ar': '',
+      'fr': '',
+    },
+    'c5jtoh9l': {
+      'en': 'Price :',
+      'ar': '',
+      'fr': '',
+    },
+    'uf8kk28a': {
+      'en': 'Lessons :',
+      'ar': '',
+      'fr': '',
+    },
+    '8hzhl6m5': {
+      'en': '14 Lessons',
+      'ar': '',
+      'fr': '',
+    },
+    '4eb5nbb0': {
+      'en': 'Category :',
+      'ar': '',
+      'fr': '',
+    },
+    'fbggu6yf': {
+      'en': '8 mins',
+      'ar': '',
+      'fr': '',
+    },
+    'd8c1a07z': {
+      'en': 'Course Content',
+      'ar': '',
+      'fr': '',
+    },
+    'oo7nu2i2': {
+      'en': 'Les alcanes',
+      'ar': '',
+      'fr': '',
+    },
+    'elk73nkg': {
+      'en': 'Definition et nomenclature',
+      'ar': '',
+      'fr': '',
+    },
+    '93l95yzj': {
+      'en': '09:10',
+      'ar': '',
+      'fr': '',
+    },
+    '5k9r7ceo': {
+      'en': 'Intro to UX Design',
+      'ar': '',
+      'fr': '',
+    },
+    'hqnnm3rw': {
+      'en': '09:10',
+      'ar': '',
+      'fr': '',
+    },
+    'ffsc4tww': {
+      'en': 'Intro to UX Design',
+      'ar': '',
+      'fr': '',
+    },
+    'h4gmf7ch': {
+      'en': '09:10',
+      'ar': '',
+      'fr': '',
+    },
+    'wzptjbjo': {
+      'en': 'Intro to UX Design',
+      'ar': '',
+      'fr': '',
+    },
+    'j4ldva1v': {
+      'en': '09:10',
+      'ar': '',
+      'fr': '',
+    },
+    'yppd1qwr': {
+      'en': 'Les alcanes',
+      'ar': '',
+      'fr': '',
+    },
+    'pxrd2x4f': {
+      'en': 'Intro to UX Design',
+      'ar': '',
+      'fr': '',
+    },
+    'x94xmxuf': {
+      'en': '8 mins',
+      'ar': '',
+      'fr': '',
+    },
+    'lil2opel': {
+      'en': 'Intro to UX Design',
+      'ar': '',
+      'fr': '',
+    },
+    'ysczghir': {
+      'en': '8 mins',
+      'ar': '',
+      'fr': '',
+    },
+    'jf5lmvpy': {
+      'en': 'Intro to UX Design',
+      'ar': '',
+      'fr': '',
+    },
+    'ns8xyeuw': {
+      'en': '8 mins',
+      'ar': '',
+      'fr': '',
+    },
+    'wixt6nj0': {
+      'en': 'Enroll now',
+      'ar': '',
+      'fr': '',
+    },
+    'ary626ty': {
+      'en': 'Home',
+      'ar': 'بيت',
+      'fr': 'Maison',
+    },
+  },
+  // video_player
+  {
+    'wb2e3rw6': {
+      'en': 'Last Updated: ',
+      'ar': '',
+      'fr': '',
+    },
+    'enk695hz': {
+      'en': 'Price :',
+      'ar': '',
+      'fr': '',
+    },
+    'oje3h5vx': {
+      'en': '8 mins',
+      'ar': '',
+      'fr': '',
+    },
+    'bgakumng': {
+      'en': 'Lessons :',
+      'ar': '',
+      'fr': '',
+    },
+    'sypyj9ls': {
+      'en': '14 Lessons',
+      'ar': '',
+      'fr': '',
+    },
+    'jeyncebo': {
+      'en': 'Category :',
+      'ar': '',
+      'fr': '',
+    },
+    'l90oqy0k': {
+      'en': '8 mins ',
+      'ar': '',
+      'fr': '',
+    },
+    '7y4qloxp': {
+      'en': '8 mins',
+      'ar': '',
+      'fr': '',
+    },
+    'tad5azdu': {
+      'en': 'Lesson',
+      'ar': '',
+      'fr': '',
+    },
+    'y0nif1o1': {
+      'en': 'Home',
+      'ar': 'بيت',
+      'fr': 'Maison',
+    },
+  },
+  // lesson_upload
+  {
+    '9w1tlny5': {
+      'en': 'Upload Course',
+      'ar': '',
+      'fr': '',
+    },
+    'ozps7xle': {
+      'en': 'Course Title',
+      'ar': '',
+      'fr': '',
+    },
+    'tas4woto': {
+      'en': 'Enter course title',
+      'ar': '',
+      'fr': '',
+    },
+    'rihfiiv9': {
+      'en': 'Course Description',
+      'ar': '',
+      'fr': '',
+    },
+    'uu7iesld': {
+      'en': 'Enter course description',
+      'ar': '',
+      'fr': '',
+    },
+    'jp3dhua8': {
+      'en': 'Upload Image',
+      'ar': '',
+      'fr': '',
+    },
+    'v7dt49ho': {
+      'en': 'Course Link',
+      'ar': '',
+      'fr': '',
+    },
+    '25bdjses': {
+      'en': 'Enter course link',
+      'ar': '',
+      'fr': '',
+    },
+    'uty0qz1u': {
+      'en': 'Submit',
+      'ar': '',
+      'fr': '',
+    },
+  },
+  // Courses_contents
+  {
+    'we54udv9': {
+      'en': 'video | 178 min',
+      'ar': '',
+      'fr': '',
+    },
+    'yguwptyp': {
+      'en': 'Topics',
+      'ar': '',
+      'fr': '',
+    },
+    'fnsm1sxy': {
+      'en': 'Home',
       'ar': '',
       'fr': '',
     },
@@ -2629,22 +2388,22 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     '78fsz7x6': {
       'en': 'Top Podcast on App',
       'ar': 'أفضل البودكاست على التطبيق',
-      'fr': '',
+      'fr': 'Meilleur podcast sur l\'application',
     },
     'jbrv3a2g': {
       'en': 'Author Name',
       'ar': 'اسم المؤلف',
-      'fr': '',
+      'fr': 'Nom de l\'auteur',
     },
     'nm199nod': {
       'en': 'Follow',
       'ar': 'يتبع',
-      'fr': '',
+      'fr': 'Suivre',
     },
     'nkotkddk': {
       'en': 'Following',
       'ar': 'التالي',
-      'fr': '',
+      'fr': 'Suivant',
     },
   },
   // Modal05CreateProject
@@ -2652,96 +2411,115 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'm24wkjjl': {
       'en': 'Create Project',
       'ar': 'إنشاء مشروع',
-      'fr': '',
+      'fr': 'Créer un projet',
     },
     'gfvutq86': {
       'en': 'Please enter the information below to add a project.',
       'ar': 'الرجاء إدخال المعلومات أدناه لإضافة مشروع.',
-      'fr': '',
+      'fr':
+          'Veuillez saisir les informations ci-dessous pour ajouter un projet.',
     },
     'zw8na8wh': {
       'en': 'Add Photo',
       'ar': 'إضافة صورة',
-      'fr': '',
+      'fr': 'Ajouter une photo',
     },
     'pld2j51g': {
       'en': 'Upload an image here...',
       'ar': 'ارفع صورة هنا...',
-      'fr': '',
+      'fr': 'Téléchargez une image ici...',
     },
     'dyf9pbc8': {
       'en': 'Showcase Project Name',
       'ar': 'عرض اسم المشروع',
-      'fr': '',
+      'fr': 'Présenter le nom du projet',
     },
     'u6anb87q': {
       'en': 'Description here...',
       'ar': 'الوصف هنا...',
-      'fr': '',
+      'fr': 'Description ici...',
     },
     'sm5h8msj': {
       'en': 'URL of the project',
       'ar': 'عنوان URL للمشروع',
-      'fr': '',
+      'fr': 'URL du projet',
     },
     'vasltge5': {
       'en': 'Clonable Link URL...',
       'ar': 'عنوان URL للرابط القابل للاستنساخ...',
-      'fr': '',
+      'fr': 'URL du lien clonable...',
     },
     'syt39qdg': {
       'en': 'Create Showcase',
       'ar': 'إنشاء عرض',
-      'fr': '',
+      'fr': 'Créer une vitrine',
     },
     'legdt7xx': {
       'en': 'Field is required',
       'ar': 'الحقل مطلوب',
-      'fr': '',
+      'fr': 'Champ requis',
     },
     'lyxb8csw': {
       'en': 'Please enter a real name',
       'ar': 'الرجاء إدخال الاسم الحقيقي',
-      'fr': '',
+      'fr': 'Veuillez entrer un vrai nom',
     },
     '3rkk2q0d': {
       'en': 'Please choose an option from the dropdown',
       'ar': 'يرجى اختيار خيار من القائمة المنسدلة',
-      'fr': '',
+      'fr': 'Veuillez choisir une option dans la liste déroulante',
     },
     'ax117xr2': {
       'en': 'Please enter a short desription',
       'ar': 'الرجاء إدخال وصف قصير',
-      'fr': '',
+      'fr': 'Veuillez saisir une courte description',
     },
     'nxigthoa': {
       'en': 'Please choose an option from the dropdown',
       'ar': 'يرجى اختيار خيار من القائمة المنسدلة',
-      'fr': '',
+      'fr': 'Veuillez choisir une option dans la liste déroulante',
     },
     '480v3hpy': {
       'en': 'We have to have a URL for the project.',
       'ar': 'يجب أن يكون لدينا عنوان URL للمشروع.',
-      'fr': '',
+      'fr': 'Nous devons avoir une URL pour le projet.',
     },
     'dleyods5': {
       'en': 'Please enter a valid URL...',
       'ar': 'أدخل رابط صحيح من فضلك...',
-      'fr': '',
+      'fr': 'Veuillez saisir une URL valide...',
     },
     'lpx0fv8t': {
       'en': 'Please choose an option from the dropdown',
       'ar': 'يرجى اختيار خيار من القائمة المنسدلة',
-      'fr': '',
+      'fr': 'Veuillez choisir une option dans la liste déroulante',
     },
     'gjepoxwj': {
       'en': 'Field is required',
       'ar': 'الحقل مطلوب',
-      'fr': '',
+      'fr': 'Champ requis',
     },
     'kw8ci40f': {
       'en': 'Please choose an option from the dropdown',
       'ar': 'يرجى اختيار خيار من القائمة المنسدلة',
+      'fr': 'Veuillez choisir une option dans la liste déroulante',
+    },
+  },
+  // Add_funds
+  {
+    'g13deymn': {
+      'en': 'Top up your wallet balance',
+      'ar': '',
+      'fr': '',
+    },
+    'cqwtc68k': {
+      'en': 'Add funds to your wallet to enjoy seamless transactions.',
+      'ar': '',
+      'fr': '',
+    },
+    'tylwilbl': {
+      'en': 'Add Funds',
+      'ar': '',
       'fr': '',
     },
   },

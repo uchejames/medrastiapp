@@ -76,9 +76,7 @@ class _Auth3VerifyPhoneWidgetState extends State<Auth3VerifyPhoneWidget>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -290,15 +288,6 @@ class _Auth3VerifyPhoneWidgetState extends State<Auth3VerifyPhoneWidget>
                                           selectedColor:
                                               FlutterFlowTheme.of(context)
                                                   .primary,
-                                          activeFillColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryText,
-                                          inactiveFillColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondaryBackground,
-                                          selectedFillColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
                                         ),
                                         controller: _model.pinCodeController,
                                         onChanged: (_) {},
@@ -310,7 +299,7 @@ class _Auth3VerifyPhoneWidgetState extends State<Auth3VerifyPhoneWidget>
                                       ),
                                       Align(
                                         alignment:
-                                            const AlignmentDirectional(1.0, -1.0),
+                                            const AlignmentDirectional(0.0, 0.0),
                                         child: Padding(
                                           padding:
                                               const EdgeInsetsDirectional.fromSTEB(
@@ -373,7 +362,7 @@ class _Auth3VerifyPhoneWidgetState extends State<Auth3VerifyPhoneWidget>
                                                 width: 1.0,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(12.0),
+                                                  BorderRadius.circular(5.0),
                                             ),
                                           ),
                                         ),

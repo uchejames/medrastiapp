@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import '/backend/algolia/serialization_util.dart';
+import '/backend/algolia/algolia_manager.dart';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
@@ -65,6 +67,16 @@ class UsersRecord extends FirestoreRecord {
   String get title => _title ?? '';
   bool hasTitle() => _title != null;
 
+  // "age" field.
+  int? _age;
+  int get age => _age ?? 0;
+  bool hasAge() => _age != null;
+
+  // "Points_balance" field.
+  int? _pointsBalance;
+  int get pointsBalance => _pointsBalance ?? 0;
+  bool hasPointsBalance() => _pointsBalance != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -76,6 +88,8 @@ class UsersRecord extends FirestoreRecord {
     _lastActiveTime = snapshotData['last_active_time'] as DateTime?;
     _role = snapshotData['role'] as String?;
     _title = snapshotData['title'] as String?;
+    _age = castToType<int>(snapshotData['age']);
+    _pointsBalance = castToType<int>(snapshotData['Points_balance']);
   }
 
   static CollectionReference get collection =>
@@ -97,6 +111,59 @@ class UsersRecord extends FirestoreRecord {
     DocumentReference reference,
   ) =>
       UsersRecord._(reference, mapFromFirestore(data));
+
+  static UsersRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
+      UsersRecord.getDocumentFromData(
+        {
+          'email': snapshot.data['email'],
+          'display_name': snapshot.data['display_name'],
+          'photo_url': snapshot.data['photo_url'],
+          'uid': snapshot.data['uid'],
+          'created_time': convertAlgoliaParam(
+            snapshot.data['created_time'],
+            ParamType.DateTime,
+            false,
+          ),
+          'phone_number': snapshot.data['phone_number'],
+          'shortDescription': snapshot.data['shortDescription'],
+          'last_active_time': convertAlgoliaParam(
+            snapshot.data['last_active_time'],
+            ParamType.DateTime,
+            false,
+          ),
+          'role': snapshot.data['role'],
+          'title': snapshot.data['title'],
+          'age': convertAlgoliaParam(
+            snapshot.data['age'],
+            ParamType.int,
+            false,
+          ),
+          'Points_balance': convertAlgoliaParam(
+            snapshot.data['Points_balance'],
+            ParamType.int,
+            false,
+          ),
+        },
+        UsersRecord.collection.doc(snapshot.objectID),
+      );
+
+  static Future<List<UsersRecord>> search({
+    String? term,
+    FutureOr<LatLng>? location,
+    int? maxResults,
+    double? searchRadiusMeters,
+    bool useCache = false,
+  }) =>
+      FFAlgoliaManager.instance
+          .algoliaQuery(
+            index: 'users',
+            term: term,
+            maxResults: maxResults,
+            location: location,
+            searchRadiusMeters: searchRadiusMeters,
+            useCache: useCache,
+          )
+          .then((r) => r.map(fromAlgolia).toList());
 
   @override
   String toString() =>
@@ -122,6 +189,8 @@ Map<String, dynamic> createUsersRecordData({
   DateTime? lastActiveTime,
   String? role,
   String? title,
+  int? age,
+  int? pointsBalance,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -135,6 +204,8 @@ Map<String, dynamic> createUsersRecordData({
       'last_active_time': lastActiveTime,
       'role': role,
       'title': title,
+      'age': age,
+      'Points_balance': pointsBalance,
     }.withoutNulls,
   );
 
@@ -155,7 +226,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.shortDescription == e2?.shortDescription &&
         e1?.lastActiveTime == e2?.lastActiveTime &&
         e1?.role == e2?.role &&
-        e1?.title == e2?.title;
+        e1?.title == e2?.title &&
+        e1?.age == e2?.age &&
+        e1?.pointsBalance == e2?.pointsBalance;
   }
 
   @override
@@ -169,7 +242,9 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.shortDescription,
         e?.lastActiveTime,
         e?.role,
-        e?.title
+        e?.title,
+        e?.age,
+        e?.pointsBalance
       ]);
 
   @override

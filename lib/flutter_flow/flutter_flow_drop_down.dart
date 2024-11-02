@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
-
+import 'package:webviewx_plus/webviewx_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'form_field_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -212,12 +213,18 @@ class _FlutterFlowDropDownState<T> extends State<FlutterFlowDropDown<T>> {
   List<DropdownMenuItem<T>> _createMenuItems() => widget.options
       .map(
         (option) => DropdownMenuItem<T>(
-          value: option,
-          child: Padding(
-            padding: _useDropdown2() ? horizontalMargin : EdgeInsets.zero,
-            child: Text(optionLabels[option] ?? '', style: widget.textStyle),
-          ),
-        ),
+            value: option,
+            child: Builder(builder: (_) {
+              final child = Padding(
+                padding: _useDropdown2() ? horizontalMargin : EdgeInsets.zero,
+                child:
+                    Text(optionLabels[option] ?? '', style: widget.textStyle),
+              );
+              if (kIsWeb) {
+                return WebViewAware(child: child);
+              }
+              return child;
+            })),
       )
       .toList();
 
@@ -231,19 +238,18 @@ class _FlutterFlowDropDownState<T> extends State<FlutterFlowDropDown<T>> {
             builder: (context, menuSetState) {
               final isSelected =
                   multiSelectController.value?.contains(item) ?? false;
-              return InkWell(
-                onTap: () {
-                  multiSelectController.value ??= [];
-                  isSelected
-                      ? multiSelectController.value!.remove(item)
-                      : multiSelectController.value!.add(item);
-                  multiSelectController.update();
-                  // This rebuilds the StatefulWidget to update the button's text.
-                  setState(() {});
-                  // This rebuilds the dropdownMenu Widget to update the check mark.
-                  menuSetState(() {});
-                },
-                child: Container(
+              return InkWell(onTap: () {
+                multiSelectController.value ??= [];
+                isSelected
+                    ? multiSelectController.value!.remove(item)
+                    : multiSelectController.value!.add(item);
+                multiSelectController.update();
+                // This rebuilds the StatefulWidget to update the button's text.
+                setState(() {});
+                // This rebuilds the dropdownMenu Widget to update the check mark.
+                menuSetState(() {});
+              }, child: Builder(builder: (_) {
+                final child = Container(
                   height: double.infinity,
                   padding: horizontalMargin,
                   child: Row(
@@ -261,8 +267,12 @@ class _FlutterFlowDropDownState<T> extends State<FlutterFlowDropDown<T>> {
                       ),
                     ],
                   ),
-                ),
-              );
+                );
+                if (kIsWeb) {
+                  return WebViewAware(child: child);
+                }
+                return child;
+              }));
             },
           ),
         ),
@@ -307,18 +317,23 @@ class _FlutterFlowDropDownState<T> extends State<FlutterFlowDropDown<T>> {
       selectedItemBuilder: (context) => widget.options
           .map(
             (item) => Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(
-                isMultiSelect
-                    ? currentValues
-                        .where((v) => optionLabels.containsKey(v))
-                        .map((v) => optionLabels[v])
-                        .join(', ')
-                    : optionLabels[item]!,
-                style: widget.textStyle,
-                maxLines: 1,
-              ),
-            ),
+                alignment: AlignmentDirectional.centerStart,
+                child: Builder(builder: (_) {
+                  final child = Text(
+                    isMultiSelect
+                        ? currentValues
+                            .where((v) => optionLabels.containsKey(v))
+                            .map((v) => optionLabels[v])
+                            .join(', ')
+                        : optionLabels[item]!,
+                    style: widget.textStyle,
+                    maxLines: 1,
+                  );
+                  if (kIsWeb) {
+                    return WebViewAware(child: child);
+                  }
+                  return child;
+                })),
           )
           .toList(),
       dropdownSearchData: widget.isSearchable
